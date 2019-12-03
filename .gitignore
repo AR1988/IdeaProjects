@@ -1,0 +1,38 @@
+/src/main/resources/application.yml
+
+*.iml
+*.json
+
+.idea/*
+.idea/
+out/
+debug/
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+*.class
+*.jar
+*.war
+*.ear
+*.tmp
+*.exe
+*.html
+*.xml
+*.rar
+
+thumbs.db
+.DS_Store
+*.log
+
+test/
+target/generated-sources/
+target/
+/.classpath
+/.project
+.settings/
