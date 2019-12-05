@@ -123,6 +123,4 @@ public class OurArrayList {
             source[i] = temp;
         }
     }
-
-
 }
