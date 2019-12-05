@@ -36,7 +36,4 @@ target/
 /.classpath
 /.project
 .settings/
-/Arrays/array_task4/.idea/workspace.xml
-/Basic/hello_world/.idea/workspace.xml
-/Basic/hello_world/out/production/hello_world/com/company/
-/Basic/hello_world/.idea/
+/tasks/
