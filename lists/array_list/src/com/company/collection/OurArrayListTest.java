@@ -1,5 +1,8 @@
 package com.company.collection;
 
+import com.company.comparator.AbstractComparator;
+import com.company.comparator.IntegerComparator;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,7 +10,7 @@ import static org.junit.Assert.*;
 public class OurArrayListTest {
 
     @Test
-    public void TestAddGet_emptyObject_addsOneElement() {
+    public void testAddGet_emptyObject_addsOneElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -16,7 +19,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestAddGet_emptyObject_addsSeveralElement() {
+    public void testAddGet_emptyObject_addsSeveralElement() {
         OurArrayList list = new OurArrayList();
 
         Integer[] expected = {1, 3, -10, 18, 4, 3, 7, 1, 3, 3, 3, 5, 5, 10, -18, 22, 28, 60, 15, 20};
@@ -30,7 +33,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestSize_emptyObject_addsOneElement() {
+    public void testSize_emptyObject_addsOneElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -39,7 +42,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestSize_emptyObject_addsSeveralElement() {
+    public void testSize_emptyObject_addsSeveralElement() {
         OurArrayList list = new OurArrayList();
 
         Integer[] expected = {1, 3, -10, 18, 4, 3, 7, 1, 3, 3, 3, 5, 5, 10, -18, 22, 28, 60, 15, 20};
@@ -51,7 +54,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestSet_oneElement_swapsElement() {
+    public void testSet_oneElement_swapsElement() {
         OurArrayList list = new OurArrayList();
         list.add(0);
         list.set(0, 10);
@@ -60,7 +63,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestSet_severalElement_swapsFirstLastMiddleElements() {
+    public void testSet_severalElement_swapsFirstLastMiddleElements() {
         OurArrayList list = new OurArrayList();
 
         Integer[] source = {1, 3, -10, 18, 4};
@@ -82,7 +85,7 @@ public class OurArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void TestGet_nonEmptyObject_expected_expected_takeOuterElement() {
+    public void testGet_nonEmptyObject_takeOuterElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -94,7 +97,7 @@ public class OurArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void TestSet_nonEmptyObject_expected_putOuterElement() {
+    public void testSet_nonEmptyObject_putOuterElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -106,7 +109,7 @@ public class OurArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void TestRemoveById_nonEmptyObject_removesOuterElement() {
+    public void testRemoveById_nonEmptyObject_removesOuterElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -118,7 +121,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestRemoveById_nonEmptyObject_removesFirstElement() {
+    public void testRemoveById_nonEmptyObject_removesFirstElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -141,7 +144,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestRemoveById_nonEmptyObject_removesMiddleElement() {
+    public void testRemoveById_nonEmptyObject_removesMiddleElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -164,7 +167,7 @@ public class OurArrayListTest {
     }
 
     @Test
-    public void TestRemoveById_nonEmptyObject_removesLastElement() {
+    public void testRemoveById_nonEmptyObject_removesLastElement() {
         OurArrayList list = new OurArrayList();
 
         list.add(5);
@@ -185,44 +188,4 @@ public class OurArrayListTest {
 
         assertEquals(5, list.size());
     }
-
-    @Test
-    public void TestRemove_RemoveElementsAndRepeatedElements_EqualsResult() {
-        OurArrayList list = new OurArrayList();
-        //Elements
-        list.add(16);
-        list.remove(16);
-        assertNull(list.get(0));
-        assertEquals(list.size(), 0);
-        //Repeated Elements
-        list.add(66);
-        list.add(66);
-        list.add(66);
-        list.remove(66);
-        assertEquals(list.get(0), 66);
-        assertEquals(list.get(1), 66);
-        assertNull(list.get(2));
-        assertEquals(list.size(), 2);
-    }
-
-    @Test
-    public void TestRemove_RemoveElementsAndRepeatedElements_TrueFalse() {
-        OurArrayList list = new OurArrayList();
-
-        for (int i = 0; i < 17; i++) {
-            list.add(i);
-        }
-        list.set(20, 20);
-        list.set(5, 14);
-        list.set(26, -20);
-        list.set(27, -20);
-        list.set(10, 555);
-
-        assertEquals(list.get(20), 20);
-        assertEquals(list.get(26), -20);
-        assertEquals(list.get(5), 14);
-        assertEquals(list.get(27), -20);
-        assertEquals(list.get(10), 555);
-    }
-
 }

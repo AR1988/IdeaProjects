@@ -1,8 +1,16 @@
 package com.company.collection;
 
+import com.company.CountryCode;
+import com.company.comparator.AbstractComparator;
+import com.company.comparator.CountryCodeComparator;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class OurArrayList {
+
     private Object[] source;
     private static final int INITIAL_CAPACITY = 16;
     private int size;
@@ -15,10 +23,6 @@ public class OurArrayList {
         return size;
     }
 
-//    public int lenght() {
-//        return source.length;
-//    }
-
     public void add(Object value) {
         if (source.length == size) {
             Object[] newSource = new Object[source.length * 2];
@@ -30,25 +34,26 @@ public class OurArrayList {
     }
 
     public Object get(int index) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
+
         return source[index];
     }
 
     public void set(int index, Object value) {
-        Object[] newSource = new Object[source.length];
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
 
-        if (index < source.length && source[index] != null) {
-            System.arraycopy(source, 0, newSource, 0, index);
-            System.arraycopy(source, index + 1, newSource, index + 1, source.length - (index + 1));
-            newSource[index] = value;
-            source = newSource;
-            size++;
-        } else {
-            System.out.println("invalid index \"" + index + "\". Enter index from \"0 to " + (source.length - 1) + "\"");
-        }
+        source[index] = value;
     }
 
     public boolean remove(Object value) {
-
+        for (int i = 0; i < source.length; i++) {
+            if (source[i].equals(value)) {
+                removeById(i);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -63,9 +68,61 @@ public class OurArrayList {
         return result;
     }
 
-//    public void display() {
-//        System.out.println(Arrays.toString(source));
-//    }
+    public Object max(AbstractComparator comparator) {
+        if (source.length == 0)
+            throw new EmptyListException();
+
+        Object max = source[0];
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(source[i], max) > 0)
+                max = source[i];
+        }
+
+        return max;
+    }
+
+
+    public Object min(AbstractComparator comparator) {
+
+//        AbstractComparator invertedComparator = new AbstractComparator() {
+//            @Override
+//            public int compare(Object o1, Object o2) {
+//                return -comparator.compare(o1, o2);
+//            }
+//        };
+//
+//        return max(invertedComparator);
+
+        if (source.length == 0)
+            throw new EmptyListException();
+
+        Object min = source[0];
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(source[i], min) < 0)
+                min = source[i];
+        }
+
+        return min;
+    }
+
+    public void sort(AbstractComparator comparator) {
+
+        for (int i = 0; i < size; i++) {
+            Object min = source[i];
+            int minId = i;
+
+            for (int j = i; j < size; j++) {
+                if (comparator.compare(source[j], min) < 0) {
+                    min = source[j];
+                    minId = j;
+                }
+            }
+
+            Object temp = source[minId];
+            source[minId] = source[i];
+            source[i] = temp;
+        }
+    }
+
 
 }
-
