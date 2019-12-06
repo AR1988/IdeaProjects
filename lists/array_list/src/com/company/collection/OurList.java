@@ -9,7 +9,7 @@ public interface OurList {
 
     int size();
 
-    boolean contains();
+    boolean contains(Object value);
 
     boolean remove(Object o);
 

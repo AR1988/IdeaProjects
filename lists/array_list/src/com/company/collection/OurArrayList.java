@@ -16,13 +16,9 @@ public class OurArrayList implements OurList {
         return size;
     }
 
-    @Override
-    public boolean containt() {
-        return false;
-    }
 
     @Override
-    public boolean contains() {
+    public boolean contains(Object value) {
         return false;
     }
 

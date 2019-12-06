@@ -1,5 +1,6 @@
 package com.company.collection;
 
+
 public class OurLinkedList implements OurList {
 
     private int size;
@@ -35,10 +36,11 @@ public class OurLinkedList implements OurList {
 
     @Override
     public void set(int index, Object value) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
 
         Node oldNodle = getNode(index);
-        Node newNode = new Node(oldNodle.next, oldNodle.prev, value);
-        System.out.printf("");
+        oldNodle.value = value;
     }
 
     //ищет и выдат об по индексу
@@ -59,13 +61,31 @@ public class OurLinkedList implements OurList {
 
 
     @Override
-    public boolean contains() {
+    public boolean contains(Object value) {
+        for (int i = 0; i < size; i++) {
+            if (get(i).equals(value)) return true;
+        }
         return false;
     }
 
     @Override
     public boolean remove(Object o) {
+        if (contains(o)) {
+            removeById(getIndex(o));
+            return true;
+        }
         return false;
+    }
+
+    private int getIndex(Object o) {
+        if (!contains(o))
+            throw new IndexOutOfBoundsException();
+        int index = 0;
+        for (int i = 0; i < size; i++) {
+            if (get(i).equals(o))
+                index = i;
+        }
+        return index;
     }
 
     @Override
@@ -73,29 +93,40 @@ public class OurLinkedList implements OurList {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        if (index > 0 || index < size - 1) {
-            Node nodeToRemove = getNode(index); //цель по индексу
-            Node left = nodeToRemove.prev;      //перемещение влево
-            Node right = nodeToRemove.next;     // перемещение вправо
+        Node nodeToRemove = getNode(index);
 
-            nodeToRemove.next = null;
-            nodeToRemove.prev = null;
+        Node left = nodeToRemove.prev;
+        Node right = nodeToRemove.next;
 
+        nodeToRemove.next = null;
+        nodeToRemove.prev = null;
+
+        if (index > 0 && index < size - 1) {
             left.next = right;
             right.prev = left;
+
+            size--;
+
             return nodeToRemove.value;
         } else if (index == 0) {
             //remove first
+            right.prev = nodeToRemove;
+            first = right;
+            size--;
+            return nodeToRemove.value;
         } else {
             //remove last
+            left.prev = left;
+            last = left;
+            last.next = nodeToRemove;
+            size--;
+            return nodeToRemove.value;
         }
-        return null;
     }
 
 
     private static class Node {
         Node() {
-
         }
 
         Node(Node next, Node prev, Object value) {
