@@ -39,8 +39,8 @@ public class OurLinkedList implements OurList {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        Node oldNodle = getNode(index);
-        oldNodle.value = value;
+        Node nodeToSet = getNode(index);
+        nodeToSet.value = value;
     }
 
     //ищет и выдат об по индексу
@@ -49,16 +49,13 @@ public class OurLinkedList implements OurList {
         for (int i = 0; i < index; i++) {
             needle = needle.next;
         }
-
         return needle;
     }
-
 
     @Override
     public int size() {
         return size;
     }
-
 
     @Override
     public boolean contains(Object value) {
@@ -78,8 +75,6 @@ public class OurLinkedList implements OurList {
     }
 
     private int getIndex(Object o) {
-        if (!contains(o))
-            throw new IndexOutOfBoundsException();
         int index = 0;
         for (int i = 0; i < size; i++) {
             if (get(i).equals(o))
@@ -113,17 +108,19 @@ public class OurLinkedList implements OurList {
             right.prev = nodeToRemove;
             first = right;
             size--;
+
             return nodeToRemove.value;
         } else {
             //remove last
             left.prev = left;
             last = left;
+
             last.next = nodeToRemove;
             size--;
+
             return nodeToRemove.value;
         }
     }
-
 
     private static class Node {
         Node() {
