@@ -105,11 +105,17 @@ public class OurLinkedList implements OurList {
             return nodeToRemove.value;
         } else if (index == 0) {
             //remove first
+//            right.prev = right;
+//            first = right;
+//            first.prev = nodeToRemove;
+//            size--;
+//            return nodeToRemove.value;
+            //remove first
             right.prev = nodeToRemove;
             first = right;
             size--;
-
             return nodeToRemove.value;
+
         } else {
             //remove last
             left.prev = left;

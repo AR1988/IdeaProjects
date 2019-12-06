@@ -309,11 +309,26 @@ public class OurLinkedListTest {
         // removeById index 0
         assertEquals(5, linkedList.size());
         assertTrue(linkedList.contains(0));
+
+        System.out.println("\nStart: ");
+        for (int i = 0; i < linkedList.size() ; i++) {
+            System.out.print(linkedList.get(i) + " ");
+        }
+
         linkedList.removeById(0);
         assertFalse(linkedList.contains(0));
         assertEquals(1, linkedList.get(0));
+        System.out.println("\nremoved 0");
+
+        for (int i = 0; i < linkedList.size() ; i++) {
+            System.out.print(linkedList.get(i) + " ");
+        }
+
         assertEquals(2, linkedList.get(1));
+        assertEquals(3, linkedList.get(2));
+        assertEquals(4, linkedList.get(3));
         assertEquals(4, linkedList.size());
+
         // removeById index 0
         assertEquals(4, linkedList.size());
         assertTrue(linkedList.contains(1));
@@ -321,6 +336,12 @@ public class OurLinkedListTest {
         assertEquals(2, linkedList.get(0));
         assertEquals(3, linkedList.size());
         assertFalse(linkedList.contains(1));
+
+        System.out.println("\nremoved 1");
+        for (int i = 0; i < linkedList.size() ; i++) {
+            System.out.print(linkedList.get(i) + " ");
+        }
+
         // removeById index 0
         assertEquals(3, linkedList.size());
         assertTrue(linkedList.contains(2));
@@ -328,6 +349,11 @@ public class OurLinkedListTest {
         assertEquals(3, linkedList.get(0));
         assertEquals(2, linkedList.size());
         assertFalse(linkedList.contains(2));
+
+        System.out.println("\nremoved 2");
+        for (int i = 0; i < linkedList.size() ; i++) {
+            System.out.print(linkedList.get(i) + " ");
+        }
         // removeById index 0
         assertEquals(2, linkedList.size());
         assertTrue(linkedList.contains(3));
@@ -335,6 +361,11 @@ public class OurLinkedListTest {
         assertEquals(4, linkedList.get(0));
         assertEquals(1, linkedList.size());
         assertFalse(linkedList.contains(3));
+
+        System.out.println("\nremoved 3");
+        for (int i = 0; i < linkedList.size() ; i++) {
+            System.out.print(linkedList.get(i) + " ");
+        }
     }
 
     @Test
