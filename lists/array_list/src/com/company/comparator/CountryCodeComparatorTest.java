@@ -12,10 +12,10 @@ public class CountryCodeComparatorTest {
     public void testMax_severalIntegers() {
         OurArrayList list = new OurArrayList();
 
-        list.add(105);
-        list.add(15);
-        list.add(2);
-        list.add(25);
+        list.append(105);
+        list.append(15);
+        list.append(2);
+        list.append(25);
 
         AbstractComparator comparator = new IntegerComparator();
 
@@ -26,11 +26,11 @@ public class CountryCodeComparatorTest {
     public void testMin_severalIntegers() {
         OurArrayList list = new OurArrayList();
 
-        list.add(105);
-        list.add(15);
-        list.add(2);
-        list.add(25);
-        list.add(-5);
+        list.append(105);
+        list.append(15);
+        list.append(2);
+        list.append(25);
+        list.append(-5);
 
         AbstractComparator comparator = new IntegerComparator();
 
@@ -56,12 +56,12 @@ public class CountryCodeComparatorTest {
     public void testSort() {
 
         OurArrayList list = new OurArrayList();
-        list.add(200);  //5
-        list.add(-50);  //0
-        list.add(1);    //2
-        list.add(0);    //1
-        list.add(8);    //3
-        list.add(9);    //4
+        list.append(200);  //5
+        list.append(-50);  //0
+        list.append(1);    //2
+        list.append(0);    //1
+        list.append(8);    //3
+        list.append(9);    //4
 
         list.sort(new IntegerComparator());
         assertEquals(-50, list.get(0));

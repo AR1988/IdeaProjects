@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.collection.OurArrayList;
+import com.company.collection.OurLinkedList;
 import com.company.comparator.CountryCodeComparator;
 import com.company.object.Employee;
 import com.company.object.Manager;
@@ -13,6 +14,10 @@ public class Application {
 
         OurArrayList cc = makeCountryCodeList();
         cc.sort(new CountryCodeComparator());
+
+        OurArrayList list = new OurArrayList();
+
+
     }
 
     static OurArrayList makeHumanList() {
@@ -21,9 +26,9 @@ public class Application {
         Human masha = new Human("Masha", 20);
 
         OurArrayList res = new OurArrayList();
-        res.add(vasya);
-        res.add(petya);
-        res.add(masha);
+        res.append(vasya);
+        res.append(petya);
+        res.append(masha);
         return res;
     }
 
@@ -37,10 +42,10 @@ public class Application {
 
         OurArrayList workersList = new OurArrayList();
 
-        workersList.add(id1);
-        workersList.add(id2);
-        workersList.add(id3);
-        workersList.add(id4);
+        workersList.append(id1);
+        workersList.append(id2);
+        workersList.append(id3);
+        workersList.append(id4);
         return workersList;
     }
 
@@ -54,11 +59,11 @@ public class Application {
 
         OurArrayList cc = new OurArrayList();
 
-        cc.add(russia);
-        cc.add(germany);
-        cc.add(usa);
-        cc.add(italy);
-        cc.add(china);
+        cc.append(russia);
+        cc.append(germany);
+        cc.append(usa);
+        cc.append(italy);
+        cc.append(china);
         return cc;
     }
 
@@ -66,11 +71,11 @@ public class Application {
 
         OurArrayList list = new OurArrayList();
 
-        list.add(200);
-        list.add(22);
-        list.add(-20);
-        list.add(11);
-        list.add(10);
+        list.append(200);
+        list.append(22);
+        list.append(-20);
+        list.append(11);
+        list.append(10);
         return list;
     }
 

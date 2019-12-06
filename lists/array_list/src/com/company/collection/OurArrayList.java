@@ -1,15 +1,8 @@
 package com.company.collection;
 
-import com.company.CountryCode;
 import com.company.comparator.AbstractComparator;
-import com.company.comparator.CountryCodeComparator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-public class OurArrayList {
+public class OurArrayList implements OurList {
 
     private Object[] source;
     private static final int INITIAL_CAPACITY = 16;
@@ -23,7 +16,18 @@ public class OurArrayList {
         return size;
     }
 
-    public void add(Object value) {
+    @Override
+    public boolean containt() {
+        return false;
+    }
+
+    @Override
+    public boolean contains() {
+        return false;
+    }
+
+    @Override
+    public void append(Object value) {
         if (source.length == size) {
             Object[] newSource = new Object[source.length * 2];
             System.arraycopy(source, 0, newSource, 0, source.length);
@@ -33,6 +37,7 @@ public class OurArrayList {
         size++;
     }
 
+    @Override
     public Object get(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
@@ -40,6 +45,7 @@ public class OurArrayList {
         return source[index];
     }
 
+    @Override
     public void set(int index, Object value) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
@@ -47,6 +53,7 @@ public class OurArrayList {
         source[index] = value;
     }
 
+    @Override
     public boolean remove(Object value) {
         for (int i = 0; i < source.length; i++) {
             if (source[i].equals(value)) {
@@ -57,6 +64,7 @@ public class OurArrayList {
         return false;
     }
 
+    @Override
     public Object removeById(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
