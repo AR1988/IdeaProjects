@@ -4,8 +4,8 @@ package com.company.collection;
 public class OurLinkedList implements OurList {
 
     private int size;
-    Node first;
-    Node last;
+    private Node first;
+    private Node last;
 
     OurLinkedList() {
     }
@@ -76,7 +76,7 @@ public class OurLinkedList implements OurList {
 
     private int getIndex(Object o) {
         int index = 0;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i ++) {
             if (get(i).equals(o))
                 index = i;
         }
@@ -100,32 +100,19 @@ public class OurLinkedList implements OurList {
             left.next = right;
             right.prev = left;
 
-            size--;
-
-            return nodeToRemove.value;
         } else if (index == 0) {
             //remove first
-//            right.prev = right;
-//            first = right;
-//            first.prev = nodeToRemove;
-//            size--;
-//            return nodeToRemove.value;
-            //remove first
-            right.prev = nodeToRemove;
-            first = right;
-            size--;
-            return nodeToRemove.value;
+//            right.next = null; // обнуление ссылки удаленного объекта
+            right.prev = null;
 
+            first = right;
         } else {
             //remove last
-            left.prev = left;
+            left.next = null;
             last = left;
-
-            last.next = nodeToRemove;
-            size--;
-
-            return nodeToRemove.value;
         }
+        size--;
+        return nodeToRemove.value;
     }
 
     private static class Node {
