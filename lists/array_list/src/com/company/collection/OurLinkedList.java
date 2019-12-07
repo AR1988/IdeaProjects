@@ -45,6 +45,7 @@ public class OurLinkedList implements OurList {
 
     //ищет и выдат об по индексу
     private Node getNode(int index) {
+
         Node needle = first;
         for (int i = 0; i < index; i++) {
             needle = needle.next;
@@ -59,28 +60,40 @@ public class OurLinkedList implements OurList {
 
     @Override
     public boolean contains(Object value) {
+        Node needle = first;
         for (int i = 0; i < size; i++) {
-            if (get(i).equals(value)) return true;
+            if (needle.value.equals(value)) {
+                return true;
+            }
+            needle = needle.next;
         }
         return false;
     }
 
     @Override
-    public boolean remove(Object o) {
-        if (contains(o)) {
-            removeById(getIndex(o));
+    public boolean remove(Object value) {
+        int index = getIndex(value);
+        if (index >= 0) {
+            removeById(index);
             return true;
         }
         return false;
     }
 
-    private int getIndex(Object o) {
-        int index = 0;
-        for (int i = 0; i < size; i++) {
-            if (get(i).equals(o))
-                index = i;
+    private int getIndex(Object value) {
+        if (contains(value)) {
+            int index = 0;
+            Node needle = first;
+
+            for (int i = 0; i < size; i++) {
+                if (needle.value.equals(value)) {
+                    return index;
+                }
+                needle = needle.next;
+                index++;
+            }
         }
-        return index;
+        return -1;
     }
 
     @Override
@@ -97,35 +110,21 @@ public class OurLinkedList implements OurList {
         nodeToRemove.prev = null;
 
         if (index > 0 && index < size - 1) {
+//            remove in list
             left.next = right;
             right.prev = left;
 
-            size--;
-
-            return nodeToRemove.value;
         } else if (index == 0) {
-            //remove first
-//            right.prev = right;
-//            first = right;
-//            first.prev = nodeToRemove;
-//            size--;
-//            return nodeToRemove.value;
-            //remove first
-            right.prev = nodeToRemove;
+//            remove first
+            right.prev = null;
             first = right;
-            size--;
-            return nodeToRemove.value;
-
         } else {
-            //remove last
-            left.prev = left;
+//            remove last
+            left.next = null;
             last = left;
-
-            last.next = nodeToRemove;
-            size--;
-
-            return nodeToRemove.value;
         }
+        size--;
+        return nodeToRemove.value;
     }
 
     private static class Node {
