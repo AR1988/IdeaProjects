@@ -1,5 +1,8 @@
 package com.company.collection;
 
+import com.company.object.Employee;
+import com.company.object.Manager;
+import com.company.object.Worker;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -51,6 +54,8 @@ public class OurLinkedListTest {
         assertEquals(7, linkedList.get(2));
         assertEquals(9, linkedList.get(3));
         assertEquals(999, linkedList.get(4));
+
+
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -88,10 +93,11 @@ public class OurLinkedListTest {
     public void size_removedObjects() {
         OurLinkedList linkedList = new OurLinkedList();
         for (int i = 0; i < 10; i++) {
-            linkedList.append(i*10);
+            linkedList.append(i * 10);
         }
 
-        assertEquals(10, linkedList.size()); //start size = 10
+        //start size = 10
+        assertEquals(10, linkedList.size());
         //remove 3 elements, size = 7
         linkedList.remove(90);
         assertEquals(9, linkedList.size());
@@ -105,10 +111,11 @@ public class OurLinkedListTest {
     public void size_removeByIdObjects() {
         OurLinkedList linkedList = new OurLinkedList();
         for (int i = 0; i < 10; i++) {
-            linkedList.append(i*10);
+            linkedList.append(i * 10);
         }
 
-        assertEquals(10, linkedList.size()); //start size = 10
+        //start size = 10
+        assertEquals(10, linkedList.size());
         //removeById 4 Elements, size = 6
         linkedList.removeById(9);
         assertEquals(9, linkedList.size());
@@ -128,7 +135,8 @@ public class OurLinkedListTest {
             linkedList.append(i);
         }
 
-        assertEquals(10, linkedList.size()); //start size = 10
+        //start size = 10
+        assertEquals(10, linkedList.size());
         //remove 2 elements, size = 8
         linkedList.remove(1);
         assertEquals(9, linkedList.size());
@@ -200,15 +208,19 @@ public class OurLinkedListTest {
         linkedList.append(20);
         linkedList.append(110);
 
-        assertTrue(linkedList.contains(10));           //is contains o:10? true
-        linkedList.remove(10);                      //remove o:10
-        assertFalse(linkedList.contains(10));          //is contains o:10? false
+        //is contains o:10? true
+        assertTrue(linkedList.contains(10));
+        //remove o:10
+        assertTrue(linkedList.remove(10));
+        //is contains o:10? false
+        assertFalse(linkedList.contains(10));
         assertEquals(3, linkedList.size());
 
         assertTrue(linkedList.contains(110));
         linkedList.remove(110);
         assertFalse(linkedList.contains(110));
         assertEquals(2, linkedList.size());
+
     }
 
     @Test
@@ -254,6 +266,7 @@ public class OurLinkedListTest {
         linkedList.removeById(1);
         assertFalse(linkedList.contains(1));
         assertEquals(9, linkedList.size());
+        assertEquals(2, linkedList.get(1));
         // removeById index 1
         assertTrue(linkedList.contains(2));
         assertEquals(9, linkedList.size());
@@ -300,6 +313,24 @@ public class OurLinkedListTest {
     }
 
     @Test
+    public void testRemoveById_nonEmptyObject_removesMiddleElement() {
+        OurArrayList list = new OurArrayList();
+        list.append(5);
+        list.append(15);
+        list.append(2);
+        list.append(5);
+        list.append(17);
+        list.append(20);
+        Object object = list.removeById(2);
+        assertEquals(2, object);
+        Integer[] expected = {5, 15, 5, 17, 20};
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], list.get(i));
+        }
+        assertEquals(5, list.size());
+    }
+
+    @Test
     public void removeById_FirstId() {
         OurLinkedList linkedList = new OurLinkedList();
 
@@ -311,7 +342,7 @@ public class OurLinkedListTest {
         assertTrue(linkedList.contains(0));
 
         System.out.println("\nStart: ");
-        for (int i = 0; i < linkedList.size() ; i++) {
+        for (int i = 0; i < linkedList.size(); i++) {
             System.out.print(linkedList.get(i) + " ");
         }
 
@@ -320,7 +351,7 @@ public class OurLinkedListTest {
         assertEquals(1, linkedList.get(0));
         System.out.println("\nremoved 0");
 
-        for (int i = 0; i < linkedList.size() ; i++) {
+        for (int i = 0; i < linkedList.size(); i++) {
             System.out.print(linkedList.get(i) + " ");
         }
 
@@ -338,7 +369,7 @@ public class OurLinkedListTest {
         assertFalse(linkedList.contains(1));
 
         System.out.println("\nremoved 1");
-        for (int i = 0; i < linkedList.size() ; i++) {
+        for (int i = 0; i < linkedList.size(); i++) {
             System.out.print(linkedList.get(i) + " ");
         }
 
@@ -351,7 +382,7 @@ public class OurLinkedListTest {
         assertFalse(linkedList.contains(2));
 
         System.out.println("\nremoved 2");
-        for (int i = 0; i < linkedList.size() ; i++) {
+        for (int i = 0; i < linkedList.size(); i++) {
             System.out.print(linkedList.get(i) + " ");
         }
         // removeById index 0
@@ -363,7 +394,7 @@ public class OurLinkedListTest {
         assertFalse(linkedList.contains(3));
 
         System.out.println("\nremoved 3");
-        for (int i = 0; i < linkedList.size() ; i++) {
+        for (int i = 0; i < linkedList.size(); i++) {
             System.out.print(linkedList.get(i) + " ");
         }
     }
@@ -415,5 +446,40 @@ public class OurLinkedListTest {
         linkedList.removeById(11);
         linkedList.removeById(15);
     }
-//endregion
+
+    //endregion
+    @Test
+    public void test_ObjEmployee() {
+        Employee id1 = new Manager("Max", "Mustermann", 1);
+        Employee id2 = new Manager("Mark", "Neumann", 2);
+        Employee id3 = new Worker("Elise", "Lemann", 10);
+        Employee id4 = new Worker("Kai", "Mueller", 20);
+
+
+        OurLinkedList workersList = new OurLinkedList();
+
+        workersList.append(id1);
+        workersList.append(id2);
+        workersList.append(id3);
+        assertEquals(3, workersList.size());
+        workersList.append(id4);
+
+        assertEquals(4, workersList.size());
+
+        workersList.removeById(0);
+        assertEquals(3, workersList.size());
+        assertEquals(3, workersList.size());
+
+        workersList.remove(id3);
+        assertEquals(2, workersList.size());
+        assertFalse(workersList.equals(id3));
+        assertFalse(workersList.contains(id3));
+
+        workersList.append(id1);
+        workersList.append(id3);
+        assertEquals(4, workersList.size());
+        assertTrue(workersList.contains(id1));
+        assertTrue(workersList.contains(id2));
+        assertEquals(4, workersList.size());
+    }
 }
