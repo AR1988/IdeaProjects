@@ -4,10 +4,10 @@ package com.company.collection;
 public class OurLinkedList implements OurList {
 
     private int size;
-    Node first;
-    Node last;
+    private Node first;
+    private Node last;
 
-    OurLinkedList() {
+    public OurLinkedList() {
     }
 
     @Override
@@ -72,26 +72,30 @@ public class OurLinkedList implements OurList {
 
     @Override
     public boolean remove(Object value) {
-        int index = getIndex(value);
-        if (index >= 0) {
-            removeById(index);
-            return true;
+
+        int index = 0;
+        Node needle = first;
+        for (int i = 0; i < size; i++) {
+            if (needle.value.equals(value)) {
+                removeById(index);
+                return true;
+            }
+            needle = needle.next;
+            index++;
         }
         return false;
     }
 
     private int getIndex(Object value) {
-        if (contains(value)) {
-            int index = 0;
-            Node needle = first;
+        int index = 0;
+        Node needle = first;
 
-            for (int i = 0; i < size; i++) {
-                if (needle.value.equals(value)) {
-                    return index;
-                }
-                needle = needle.next;
-                index++;
+        for (int i = 0; i < size; i++) {
+            if (needle.value.equals(value)) {
+                return index;
             }
+            needle = needle.next;
+            index++;
         }
         return -1;
     }
