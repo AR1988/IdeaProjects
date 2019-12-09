@@ -19,6 +19,10 @@ public class Application {
         }
         return x;
     }
+
+    static int nok(int x, int y) {
+        return (x * y) / nod(x, y);
+    }
 }
 
 
