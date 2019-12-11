@@ -8,16 +8,30 @@ public class CensorTest {
 
     @Test
     public void isLegal() {
-        String[] text1 = {"text","unlegal","legalText"};
-        String[] text2 = {"text","legal","legalText"};
-        String[] text3 = {"unlegal","legal","legalText"};
+        String text1 = "text unlegal legalText";
 
-        Censor censor1 = new Censor(text1);
-        Censor censor2 = new Censor(text2);
-        Censor censor3 = new Censor(text3);
+        Censor censor1 = new Censor(new String[] {"unlegal"});
+        Censor censor2 = new Censor(new String[] {"text","unlegal", "legalText"});
+        Censor censor3 = new Censor(new String[] {"gtext","gunlegal", "glegalText"});
 
-        assertTrue(censor2.isLegal());
-        assertFalse(censor1.isLegal());
-        assertFalse(censor3.isLegal());
+        assertFalse(censor1.isLegal(text1));
+        assertFalse(censor2.isLegal(text1));
+        assertTrue(censor3.isLegal(text1));
+    }
+
+    @Test
+    public void isLegal_returns_false() {
+        Censor censor = new Censor(new String[]{"Democracy", "Freedom"});
+        String text = "democracy - the power of the people.";
+
+        assertFalse(censor.isLegal(text));
+    }
+
+    @Test
+    public void isLegal_returns_true() {
+        Censor censor = new Censor(new String[]{"Democracy", "Freedom"});
+        String text = "monarchy - the best system of government.";
+
+        assertTrue(censor.isLegal(text));
     }
 }
