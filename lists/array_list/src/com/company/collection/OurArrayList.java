@@ -2,14 +2,16 @@ package com.company.collection;
 
 import com.company.comparator.AbstractComparator;
 
-public class OurArrayList implements OurList {
+import java.util.Objects;
 
-    private Object[] source;
+public class OurArrayList<E> implements OurList<E> {
+
+    private E[] source;
     private static final int INITIAL_CAPACITY = 16;
     private int size;
 
     public OurArrayList() {
-        source = new Object[INITIAL_CAPACITY];
+        source = (E[]) new Object[INITIAL_CAPACITY];
     }
 
     public int size() {
@@ -18,14 +20,14 @@ public class OurArrayList implements OurList {
 
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return false;
     }
 
     @Override
-    public void append(Object value) {
+    public void append(E value) {
         if (source.length == size) {
-            Object[] newSource = new Object[source.length * 2];
+            E[] newSource = (E[]) new Object[source.length * 2];
             System.arraycopy(source, 0, newSource, 0, source.length);
             source = newSource;
         }
@@ -34,7 +36,7 @@ public class OurArrayList implements OurList {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
@@ -42,7 +44,7 @@ public class OurArrayList implements OurList {
     }
 
     @Override
-    public void set(int index, Object value) {
+    public void set(int index, E value) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
@@ -50,7 +52,7 @@ public class OurArrayList implements OurList {
     }
 
     @Override
-    public boolean remove(Object value) {
+    public boolean remove(E value) {
         for (int i = 0; i < source.length; i++) {
             if (source[i].equals(value)) {
                 removeById(i);
@@ -61,22 +63,22 @@ public class OurArrayList implements OurList {
     }
 
     @Override
-    public Object removeById(int index) {
+    public E removeById(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        Object result = source[index];
+        E result = source[index];
 
         System.arraycopy(source, index + 1, source, index, source.length - (index + 1));
         size--;
         return result;
     }
 
-    public Object max(AbstractComparator comparator) {
+    public E max(AbstractComparator comparator) {
         if (source.length == 0)
             throw new EmptyListException();
 
-        Object max = source[0];
+        E max = source[0];
         for (int i = 1; i < size; i++) {
             if (comparator.compare(source[i], max) > 0)
                 max = source[i];
@@ -86,11 +88,11 @@ public class OurArrayList implements OurList {
     }
 
 
-    public Object min(AbstractComparator comparator) {
+    public E min(AbstractComparator comparator) {
 
 //        AbstractComparator invertedComparator = new AbstractComparator() {
 //            @Override
-//            public int compare(Object o1, Object o2) {
+//            public int compare(E o1, E o2) {
 //                return -comparator.compare(o1, o2);
 //            }
 //        };
@@ -100,7 +102,7 @@ public class OurArrayList implements OurList {
         if (source.length == 0)
             throw new EmptyListException();
 
-        Object min = source[0];
+        E min = source[0];
         for (int i = 1; i < size; i++) {
             if (comparator.compare(source[i], min) < 0)
                 min = source[i];
@@ -112,7 +114,7 @@ public class OurArrayList implements OurList {
     public void sort(AbstractComparator comparator) {
 
         for (int i = 0; i < size; i++) {
-            Object min = source[i];
+            E min = source[i];
             int minId = i;
 
             for (int j = i; j < size; j++) {
@@ -122,7 +124,7 @@ public class OurArrayList implements OurList {
                 }
             }
 
-            Object temp = source[minId];
+            E temp = source[minId];
             source[minId] = source[i];
             source[i] = temp;
         }

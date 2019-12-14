@@ -3,11 +3,11 @@ package com.company.comparator;
 import com.company.CountryCode;
 
 
-public class CountryCodeComparator extends AbstractComparator {
+public class CountryCodeComparator<E> extends AbstractComparator<E> {
 
 
     @Override
-    public int compare(Object o1, Object o2) {
+    public int compare(E o1, E o2) {
         CountryCode x = (CountryCode) o1;
         CountryCode y = (CountryCode) o2;
 

@@ -1,17 +1,17 @@
 package com.company.collection;
 
-public interface OurList {
-    void append(Object o);
+public interface OurList<E> {
+    void append(E o);
 
-    Object get(int index);
+    E get(int index);
 
-    void set(int index, Object value);
+    void set(int index, E value);
 
     int size();
 
-    boolean contains(Object value);
+    boolean contains(E value);
 
-    boolean remove(Object o);
+    boolean remove(E o);
 
-    Object removeById(int index);
+    E removeById(int index);
 }

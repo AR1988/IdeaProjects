@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class CountryCodeComparatorTest {
+public class CountryCodeComparatorTest<E> {
 
     @Test
     public void testMax_severalIntegers() {

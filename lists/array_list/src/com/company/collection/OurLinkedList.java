@@ -1,7 +1,7 @@
 package com.company.collection;
 
 
-public class OurLinkedList implements OurList {
+public class OurLinkedList<E> implements OurList<E> {
 
     private int size;
     private Node first;
@@ -11,7 +11,7 @@ public class OurLinkedList implements OurList {
     }
 
     @Override
-    public void append(Object value) {
+    public void append(E value) {
         if (size > 0) {
             Node newNode = new Node(null, last, value);
             last.next = newNode;
@@ -26,20 +26,20 @@ public class OurLinkedList implements OurList {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        Node needle = getNode(index);
+        Node<E> needle = getNode(index);
         return needle.value;
     }
 
     @Override
-    public void set(int index, Object value) {
+    public void set(int index, E value) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        Node nodeToSet = getNode(index);
+        Node<E> nodeToSet = getNode(index);
         nodeToSet.value = value;
     }
 
@@ -59,7 +59,7 @@ public class OurLinkedList implements OurList {
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         Node needle = first;
         for (int i = 0; i < size; i++) {
             if (needle.value.equals(value)) {
@@ -71,7 +71,7 @@ public class OurLinkedList implements OurList {
     }
 
     @Override
-    public boolean remove(Object value) {
+    public boolean remove(E value) {
 
         int index = 0;
         Node needle = first;
@@ -86,7 +86,7 @@ public class OurLinkedList implements OurList {
         return false;
     }
 
-    private int getIndex(Object value) {
+    private int getIndex(E value) {
         int index = 0;
         Node needle = first;
 
@@ -101,14 +101,14 @@ public class OurLinkedList implements OurList {
     }
 
     @Override
-    public Object removeById(int index) {
+    public E removeById(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
 
-        Node nodeToRemove = getNode(index);
+        Node<E> nodeToRemove = getNode(index);
 
-        Node left = nodeToRemove.prev;
-        Node right = nodeToRemove.next;
+        Node<E> left = nodeToRemove.prev;
+        Node<E> right = nodeToRemove.next;
 
         nodeToRemove.next = null;
         nodeToRemove.prev = null;
@@ -131,11 +131,11 @@ public class OurLinkedList implements OurList {
         return nodeToRemove.value;
     }
 
-    private static class Node {
+    private static class Node<E> {
         Node() {
         }
 
-        Node(Node next, Node prev, Object value) {
+        Node(Node next, Node prev, E value) {
             this.next = next;
             this.prev = prev;
             this.value = value;
@@ -143,6 +143,6 @@ public class OurLinkedList implements OurList {
 
         Node next;
         Node prev;
-        Object value;
+        E value;
     }
 }
