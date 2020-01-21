@@ -20,7 +20,7 @@ public class Main {
                 "?=\t 1) Число фибоначи от n\t 2) Вывести остаток от деления fib(n) на число m\n");
 
         System.out.println(stringBuilder.toString());
-}
+    }
 
     public static int gcd(int a, int b) {
         if (a < b) return -1;
@@ -67,7 +67,7 @@ public class Main {
 
     public static int task5(int n, int m) {
         if (m >= 1) {
-            int[] fib = new int[n + 1];
+            int[] fib = new int[(n % m) + 1];
             fib[0] = 0;
             fib[1] = 1;
             for (int i = 2; i < fib.length; i++) {
@@ -75,8 +75,8 @@ public class Main {
                 if (fib[i] < 0)
                     return -666;
             }
-            return fib[n] % m;
-        } else return m;
+            return fib[n];
+        } else return -777;
     }
 }
 
