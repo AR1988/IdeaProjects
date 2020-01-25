@@ -11,7 +11,7 @@ import java.util.Date;
 public class Application {
 
     public static void main(String[] args) throws IOException {
-        writeToFile("fileName.txt", 100000, 7);
+        writeToFile("fileName.txt", 100000, 200);
     }
 
     private static void writeToFile(String fileName, int repead, int loopRepead) throws IOException {
@@ -27,14 +27,13 @@ public class Application {
         PerformanceTest testOur = new OurHashMapPerformsRule();
         PerformanceTest testNew = new NewHashMapPerformsRule();
 
-        Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("ss:S");
 
         StringBuilder stringBuilder = new StringBuilder();
         String format = "%10s|%5d|%5d|%5d|\n";
 
         for (int i = 0; i < loopRepead; i++) {
-            stringBuilder.append("............").append(formatForDateNow.format(dateNow)).append("...........\n");
+            stringBuilder.append("............").append(formatForDateNow.format(new Date())).append("...........\n");
 
             stringBuilder.append(String.format("%10s|%5s|%5s|%5s|\n", " ", "Java", "Our", "New"));
             stringBuilder.append(String.format(format, "Put", testJava.performPut(repeat), testOur.performPut(repeat), testNew.performPut(repeat)));
