@@ -3,7 +3,6 @@ package com.company.collections;
 
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -14,7 +13,7 @@ public class OurHashMapTest {
 
     @Test
     public void testPut_checkWithJavaHashmap() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
 
         hm.put("one", "1");
         hm.put("two", "2");
@@ -38,7 +37,7 @@ public class OurHashMapTest {
 
     @Test
     public void testGet_inList() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
         hm.put("three", "3");
@@ -58,7 +57,7 @@ public class OurHashMapTest {
 
     @Test
     public void testGet_notInList() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
         hm.put("three", "3");
@@ -73,7 +72,7 @@ public class OurHashMapTest {
 
     @Test
     public void testContains_inList_true() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
         hm.put("three", "3");
@@ -88,7 +87,7 @@ public class OurHashMapTest {
 
     @Test
     public void testContains_inList_false() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
         hm.put("three", "3");
@@ -100,7 +99,7 @@ public class OurHashMapTest {
 
     @Test
     public void testRemove_inList_checkWithSizeAndContains() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
         hm.put("three", "3");
@@ -123,7 +122,7 @@ public class OurHashMapTest {
 
     @Test
     public void testRemove_notInLins_checkWithSize() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         hm.put("two", "2");
 
@@ -134,7 +133,7 @@ public class OurHashMapTest {
 
     @Test
     public void testSize_checkWithPut() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         hm.put("one", "1");
         assertEquals(hm.size(), 1);
 
@@ -156,7 +155,7 @@ public class OurHashMapTest {
 
     @Test
     public void testSize_checkWithRemove() {
-        OurHashMap<String, String> hm = new OurHashMap<>();
+        NewHashMap<String, String> hm = new NewHashMap<>();
         assertEquals(hm.size(),0);
         hm.put("one", "1");
         hm.put("two", "2");

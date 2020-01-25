@@ -5,7 +5,7 @@ import java.util.List;
 
 public class OurHashMap<E, T> implements OurMap<E, T> {
 
-    private static final int CAPACITY = 10000;
+    private static final int CAPACITY = 1000000;
     private List<Node<E, T>>[] source = new List[CAPACITY];
     private int size;
 
@@ -55,9 +55,9 @@ public class OurHashMap<E, T> implements OurMap<E, T> {
 
         int index = computeIndex(key);
         if (source[index] != null) {
-            for (Node<E, T> Node : source[index])
-                if (key.equals(Node.key))
-                    return Node.value;
+            for (Node<E, T> node : source[index])
+                if (key.equals(node.key))
+                    return node.value;
         }
         return null;
     }
@@ -81,11 +81,12 @@ public class OurHashMap<E, T> implements OurMap<E, T> {
     public boolean remove(E key) {
         int index = computeIndex(key);
 
-        if (contains(key)) {
-            for (Node<E, T> Node : source[index])
-                if (key.equals(Node.key)) {
-                    Node.value = null;
-                    Node.key = null;
+        if (source[index] != null) {
+            for (Node<E, T> node : source[index])
+                if (key.equals(node.key)) {
+                    node.value = null;
+                    node.key = null;
+                    source[index].remove(node);
                     size--;
                     return true;
                 }
