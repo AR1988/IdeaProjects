@@ -1,40 +1,49 @@
 package com.company;
 
-import com.company.performance_test.JavaHashMapPerformsRule;
-import com.company.performance_test.NewHashMapPerformsRule;
-import com.company.performance_test.OurHashMapPerformsRule;
-import com.company.performance_test.PerformanceTest;
 
-import java.io.*;
+import com.company.performance_test.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Application {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Date dateNow = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("hh:mm:ss:S");
+    public static void main(String[] args) throws IOException {
+        writeToFile("fileName.txt", 100000, 7);
+    }
 
+    private static void writeToFile(String fileName, int repead, int loopRepead) throws IOException {
+        FileWriter writer = new FileWriter(fileName);
+        writer.append(stringResults(repead, loopRepead));
+        writer.close();
+
+        System.out.println("done");
+    }
+
+    private static StringBuilder stringResults(int repeat, int loopRepead) {
         PerformanceTest testJava = new JavaHashMapPerformsRule();
         PerformanceTest testOur = new OurHashMapPerformsRule();
         PerformanceTest testNew = new NewHashMapPerformsRule();
 
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("ss:S");
 
-        int n = 580000;
-        String format = "%1s|%2d|%2s|%2d|%2s|%2d\n";
+        StringBuilder stringBuilder = new StringBuilder();
+        String format = "%10s|%5d|%5d|%5d|\n";
 
+        for (int i = 0; i < loopRepead; i++) {
+            stringBuilder.append("............").append(formatForDateNow.format(dateNow)).append("...........\n");
 
-            System.out.println("Put:");
-            System.out.format(format, "Java", testJava.performPut(n), "Our", testOur.performPut(n), "New", testNew.performPut(n));
-            System.out.println("Get:");
-            System.out.printf(format, "Java", testJava.performGet(), "Our", testOur.performGet(), "New", testNew.performGet());
-            System.out.println("Content:");
-            System.out.printf(format, "Java", testJava.performContent(), "Our", testOur.performContent(), "New", testNew.performContent());
-            System.out.println("Remove");
-            System.out.printf(format, "Java", testJava.performRemove(), "Our", testOur.performRemove(), "New", testNew.performRemove());
-            System.out.println();
+            stringBuilder.append(String.format("%10s|%5s|%5s|%5s|\n", " ", "Java", "Our", "New"));
+            stringBuilder.append(String.format(format, "Put", testJava.performPut(repeat), testOur.performPut(repeat), testNew.performPut(repeat)));
+            stringBuilder.append(String.format(format, "Get", testJava.performGet(), testOur.performGet(), testNew.performGet()));
+            stringBuilder.append(String.format(format, "Content", testJava.performContent(), testOur.performContent(), testNew.performContent()));
+            stringBuilder.append(String.format(format, "Remove", testJava.performRemove(), testOur.performRemove(), testNew.performRemove()));
 
+            stringBuilder.append(".............................\n");
+        }
+        return stringBuilder;
     }
 }
