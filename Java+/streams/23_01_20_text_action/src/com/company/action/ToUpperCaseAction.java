@@ -14,8 +14,8 @@ public class ToUpperCaseAction extends TextAction {
        List<String> tmp = new ArrayList<>(content);
 
        content.clear();
-        for (int i = 0; i < tmp.size() ; i++) {
-            content.add(tmp.get(i).toUpperCase());
+        for (String s : tmp) {
+            content.add(s.toUpperCase());
         }
     }
 }

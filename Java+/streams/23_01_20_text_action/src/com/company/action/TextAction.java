@@ -16,9 +16,6 @@ public abstract class TextAction {
 
     public void perform() throws IOException {
         List<String> content = readFromFile(inputFilename);
-
-        //something happens
-
         performTask(content);
         writeToFile(content);
     }
@@ -26,28 +23,24 @@ public abstract class TextAction {
     protected abstract void performTask(List<String> content);
 
     private void writeToFile(List<String> content) throws IOException {
-        PrintWriter printWriter = new PrintWriter(outputFilename);
 
-        try {
+        try (PrintWriter printWriter = new PrintWriter(outputFilename)) {
             for (String line : content) {
                 printWriter.println(line);
             }
-        } finally {
-            printWriter.close();
         }
     }
 
     private List<String> readFromFile(String inputFilename) throws IOException {
 
-        List<String> result = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(inputFilename));
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFilename))) {
+            List<String> result = new ArrayList<>();
+            String in;
 
-        String in;
-
-        while ((in = br.readLine()) != null) {
-            result.add(in);
+            while ((in = br.readLine()) != null) {
+                result.add(in);
+            }
+            return result;
         }
-        br.close();
-        return result;
     }
 }
