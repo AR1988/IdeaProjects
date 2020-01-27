@@ -10,13 +10,12 @@ public class OurHashMap<E, T> implements OurMap<E, T> {
     private int size;
 
     private static class Node<E, T> {
+        E key;
+        T value;
         public Node(E key, T value) {
             this.key = key;
             this.value = value;
         }
-
-        E key;
-        T value;
     }
 
     @Override
@@ -50,6 +49,15 @@ public class OurHashMap<E, T> implements OurMap<E, T> {
         return Math.abs(key.hashCode() % CAPACITY);
     }
 
+    private Node<E,T> getNode (E key, int index){
+        if (source[index] != null) {
+            for (Node<E, T> node : source[index])
+                if (key.equals(node.key))
+                    return node;
+        }
+        return null;
+    }
+
     @Override
     public T get(E key) {
 
@@ -64,32 +72,21 @@ public class OurHashMap<E, T> implements OurMap<E, T> {
 
     @Override
     public boolean contains(E key) {
-        boolean wasFound = false;
-        int index = computeIndex(key);
-
-        if (source[index] != null) {
-            for (Node<E, T> Node : source[index])
-                if (key.equals(Node.key)) {
-                    wasFound = true;
-                    return wasFound;
-                }
-        }
-        return wasFound;
+        Node<E,T> nodeTmp = getNode(key,computeIndex(key));
+        return nodeTmp != null ;
     }
 
     @Override
     public boolean remove(E key) {
         int index = computeIndex(key);
 
-        if (source[index] != null) {
-            for (Node<E, T> node : source[index])
-                if (key.equals(node.key)) {
-                    node.value = null;
-                    node.key = null;
-                    source[index].remove(node);
-                    size--;
-                    return true;
-                }
+        Node <E,T> node = getNode(key, index);
+        if (node != null){
+            node.value = null;
+            node.key = null;
+            source[index].remove(node);
+            size--;
+            return true;
         }
         return false;
     }
