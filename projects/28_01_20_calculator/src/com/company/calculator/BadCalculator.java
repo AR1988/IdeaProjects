@@ -1,7 +1,5 @@
 package com.company.calculator;
 
-import com.company.exception.OperationNotSupportedException;
-
 public class BadCalculator implements ICalculator {
     @Override
     public double calculate(double num1, double num2, char operand) throws OperationNotSupportedException {

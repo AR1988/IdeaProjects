@@ -1,7 +1,5 @@
 package com.company.calculator;
 
-import com.company.exception.OperationNotSupportedException;
-
 import java.lang.reflect.InvocationTargetException;
 
 public class CharCalculator implements ICalculator {

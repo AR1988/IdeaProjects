@@ -1,4 +1,4 @@
-package com.company.exception;
+package com.company.calculator;
 
 public class OperationNotSupportedException extends Exception {
 }
