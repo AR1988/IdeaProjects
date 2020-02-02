@@ -11,100 +11,110 @@ import static org.junit.Assert.*;
 
 public class MaxStackTest {
 
-    MaxStack source = new MaxStack();
-    OurComparator cp = new IntegerOurComparator();
+    MaxStack<Integer> sourceInt = new MaxStack<>();
+    MaxStack<String> sourceStr = new MaxStack<>();
+    OurComparator cpInt = new IntegerOurComparator();
+    OurComparator cpString = new StringComparator();
 
     @Test
     public void testGetMax_FourIntegerElementsWithPositiveNumbersSortedElementsWithComparator() throws EmptyListException {
-        source.addLast(2);
-        source.addLast(7);
-        source.addLast(8);
-        source.addLast(16);
+        sourceInt.addLast(2);
+        sourceInt.addLast(7);
+        sourceInt.addLast(8);
+        sourceInt.addLast(16);
 
-        assertEquals(16, source.getMax(cp));
+        assertEquals((Integer) 16, sourceInt.getMax(cpInt));
     }
 
     @Test
     public void testGetMax_FourIntegerElementsWithPositiveNumbersNotSortElementsWithComparator() throws EmptyListException {
-        source.addLast(7);
-        source.addLast(2);
-        source.addLast(8);
-        source.addLast(20);
+        sourceInt.addLast(7);
+        sourceInt.addLast(2);
+        sourceInt.addLast(8);
+        sourceInt.addLast(20);
 
-        assertEquals(20, source.getMax(cp));
+        assertEquals((Integer)20, sourceInt.getMax(cpInt));
     }
 
     @Test
     public void testGetMax_FourIntegerElementsWithNegativeNumbersNotSortElementsWithComparator() throws EmptyListException {
-        source.addLast(7);
-        source.addLast(-1);
-        source.addLast(18);
-        source.addLast(-10);
+        sourceInt.addLast(7);
+        sourceInt.addLast(-1);
+        sourceInt.addLast(18);
+        sourceInt.addLast(-10);
 
-        assertEquals(18, source.getMax(cp));
+        assertEquals((Integer)18, sourceInt.getMax(cpInt));
     }
 
     @Test(expected = EmptyListException.class)
     public void testGetMax_EmptyListExceptionWithComparator() throws EmptyListException {
-        source.getMax(cp);
+        sourceInt.getMax(cpInt);
     }
 
     @Test
     public void testGetMax_FourIntegerElementsWithPositiveNumbersSortedElementsNoComparator() throws EmptyListException {
-        source.addLast(2);
-        source.addLast(7);
-        source.addLast(8);
-        source.addLast(16);
+        sourceInt.addLast(2);
+        sourceInt.addLast(7);
+        sourceInt.addLast(8);
+        sourceInt.addLast(16);
 
-        assertEquals(16, source.getMax());
+        assertEquals(16, sourceInt.getMax());
     }
 
     @Test
     public void testGetMax_FourIntegerElementsWithPositiveNumbersNotSortElementsNoComparator() throws EmptyListException {
-        source.addLast(7);
-        source.addLast(2);
-        source.addLast(8);
-        source.addLast(20);
+        sourceInt.addLast(7);
+        sourceInt.addLast(2);
+        sourceInt.addLast(8);
+        sourceInt.addLast(20);
 
-        assertEquals(20, source.getMax());
+        assertEquals(20, sourceInt.getMax());
     }
 
     @Test
     public void testGetMax_FourIntegerElementsWithNegativeNumbersNotSortElementsNoComparator() throws EmptyListException {
-        source.addLast(7);
-        source.addLast(-1);
-        source.addLast(18);
-        source.addLast(-10);
+        sourceInt.addLast(7);
+        sourceInt.addLast(-1);
+        sourceInt.addLast(18);
+        sourceInt.addLast(-10);
 
-        assertEquals(18, source.getMax());
+        assertEquals(18, sourceInt.getMax());
     }
 
     @Test(expected = EmptyListException.class)
     public void testGetMax_EmptyListExceptionNoComparator() throws EmptyListException {
-        source.getMax();
+        sourceInt.getMax();
     }
 
     @Test
     public void testGetMax_FourStringElementsAllLowercase() throws EmptyListException {
-        source.addLast("a");
-        source.addLast("b");
-        source.addLast("c");
-        source.addLast("d");
+        sourceStr.addLast("a");
+        sourceStr.addLast("b");
+        sourceStr.addLast("c");
+        sourceStr.addLast("d");
 
         OurComparator cpString = new StringComparator();
 
-        assertEquals("d", source.getMax(cpString));
+        assertEquals("d", sourceStr.getMax(cpString));
     }
 
     @Test
-    public void testGetMax_FourStringElementsFirstUppercaseSecondLowercase() throws EmptyListException {
-        source.addLast("a");
-        source.addLast("b");
-        source.addLast("c");
-        source.addLast("A");
+    public void testGetMax_FourStringElementsWithUppercaseAndLowercase() throws EmptyListException {
+        sourceStr.addLast("b");
+        sourceStr.addLast("A");
+        sourceStr.addLast("C");
+        sourceStr.addLast("a");
 
-        OurComparator cpString = new StringComparator();
+        assertEquals("b", sourceStr.getMax(cpString));
+    }
 
-        assertEquals("A", source.getMax(cpString));
+    @Test
+    public void testGetMax_FourStringElementsAllUppercaseElements() throws EmptyListException {
+        sourceStr.addLast("B");
+        sourceStr.addLast("A");
+        sourceStr.addLast("D");
+        sourceStr.addLast("G");
+
+        assertEquals("G", sourceStr.getMax(cpString));
     }
 }

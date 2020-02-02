@@ -1,9 +1,9 @@
 package com.company;
 
 import com.company.collection.EmptyListException;
-import com.company.collection.MaxStack;
-import com.company.comparator.OurComparator;
-import com.company.comparator.StringComparator;
+
+
+import java.util.Arrays;
 
 public class Application {
 
@@ -16,12 +16,10 @@ public class Application {
         for (c = 'A'; c <= 'Z'; c++)
             System.out.print(c + "=" + (int) c + " ");
         System.out.println();
+        for (c = '0'; c <= '9'; c++)
+            System.out.print(c + "=" + (int) c + " ");
+        System.out.println();
 
-        char ch;
-        for (int i = 0; i < 138; i++) {
-            ch = (char) i;
-            System.out.print(ch + "=" + i + " ");
-        }
     }
 }
 

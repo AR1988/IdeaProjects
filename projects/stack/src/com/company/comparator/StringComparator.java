@@ -1,6 +1,6 @@
 package com.company.comparator;
 
-public class StringComparator implements OurComparator {
+public class StringComparator extends OurComparator {
     @Override
     public int compare(Object o1, Object o2) {
         String str1 = (String) o1;
@@ -12,11 +12,11 @@ public class StringComparator implements OurComparator {
         int resStr1Char = 0;
         int resStr2Char = 0;
 
-        for (int i = 0; i < str1Char.length; i++) {
-            resStr1Char += (int) str1Char[i];
+        for (char c : str1Char) {
+            resStr1Char += c;
         }
-        for (int i = 0; i < str2Char.length; i++) {
-            resStr2Char = (int) str2Char[i];
+        for (char c : str2Char) {
+            resStr2Char += c;
         }
 
         return resStr1Char - resStr2Char;

@@ -1,5 +1,5 @@
 package com.company.comparator;
 
-public interface OurComparator<E> {
-    public int compare(E o1, E o2);
+public abstract class OurComparator {
+    public abstract int compare(Object o1, Object o2);
 }

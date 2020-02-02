@@ -1,6 +1,6 @@
 package com.company.comparator;
 
-public class IntegerOurComparator implements OurComparator {
+public class IntegerOurComparator extends OurComparator {
 
 
     @Override
