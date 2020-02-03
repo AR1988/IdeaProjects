@@ -6,10 +6,10 @@ import com.company.comparator.OurComparator;
 
 import java.util.*;
 
-public class MaxStack<E> {
+public class OurStack<E> {
     private List<E> source;
 
-    public MaxStack() {
+    public OurStack() {
         source = new ArrayList<>();
     }
 
@@ -21,11 +21,15 @@ public class MaxStack<E> {
         return source.remove(source.size() - 1);
     }
 
-    public int getMax() throws EmptyListException {
+    public E getLast() {
+        return source.get(source.size() - 1);
+    }
+
+    public Integer getMax() throws EmptyListException {
         if (source.size() == 0)
             throw new EmptyListException();
         OurComparator cp = new IntegerOurComparator();
-        return (int) getMax(cp);
+        return (Integer) getMax(cp);
     }
 
 

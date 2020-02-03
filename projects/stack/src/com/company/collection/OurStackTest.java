@@ -9,10 +9,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MaxStackTest {
+public class OurStackTest {
 
-    MaxStack<Integer> sourceInt = new MaxStack<>();
-    MaxStack<String> sourceStr = new MaxStack<>();
+    OurStack<Integer> sourceInt = new OurStack<>();
+    OurStack<String> sourceStr = new OurStack<>();
     OurComparator cpInt = new IntegerOurComparator();
     OurComparator cpString = new StringComparator();
 
