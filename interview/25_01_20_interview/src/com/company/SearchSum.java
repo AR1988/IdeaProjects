@@ -3,28 +3,23 @@ package com.company;
 import java.util.*;
 
 public class SearchSum {
-    List<Integer> newList;
-    int number;
+    Deque<Integer> newList;
 
-    public SearchSum(List<Integer> list, int number) {
+    public SearchSum(List<Integer> list) {
         Collections.sort(list);
-
-        this.newList=list;
-        this.number = number;
+        this.newList = new ArrayDeque<>(list);
     }
 
-    public boolean isSum() {
-        Deque<Integer> newList2 = new ArrayDeque<>(newList);
-
-        if (newList2.size() < 1)
+    public boolean isSum(int number) {
+        if (newList.size() < 1)
             return false;
 
-        while (newList2.size() != 0) {
-            if ((newList2.getFirst() + newList2.getLast()) < number)
-            newList2.removeFirst();
+        while (newList.size() != 0) {
+            if ((newList.getFirst() + newList.getLast()) < number)
+                newList.removeFirst();
 
-            else if ((newList2.getFirst() + newList2.getLast()) > number)
-                newList2.removeLast();
+            else if ((newList.getFirst() + newList.getLast()) > number)
+                newList.removeLast();
             else return true;
         }
         return false;
