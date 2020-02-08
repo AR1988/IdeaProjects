@@ -9,8 +9,14 @@ public class Application {
     }
 
     static private int power(int n, int k) {
-        if (k < 2)
+        if (k == 0)
             return 1;
         return n * power(n, k - 1);
+    }
+
+    static private int powerTwoWithoutMultiplication(int n) {
+        if (n == 0)
+            return 0;
+        return powerTwoWithoutMultiplication(n - 1) + n + n - 1;
     }
 }
