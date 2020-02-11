@@ -91,13 +91,13 @@ public class OurTreeSet<E> implements OurSet<E> {
     }
 
     private void junctionRemove(TreeNode<E> nodeToRemove) {
-        TreeNode<E> tempNode = nodeToRemove.right;
+        TreeNode<E> needle = nodeToRemove.right;
 
-        while (tempNode.left != null)
-            tempNode = tempNode.left;
+        while (needle.left != null)
+            needle = needle.left;
 
-        nodeToRemove.key = tempNode.key;
-        linealRemove(tempNode);
+        nodeToRemove.key = needle.key;
+        linealRemove(needle);
     }
 
     private void linealRemove(TreeNode<E> nodeToRemove) {
