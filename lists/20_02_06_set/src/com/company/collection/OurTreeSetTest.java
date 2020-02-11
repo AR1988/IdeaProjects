@@ -11,7 +11,7 @@ public class OurTreeSetTest {
 
     OurSet<Integer> ourSource = new OurTreeSet<>();
     OurSet<Integer> ourNewSource = new OurTreeSet<>();
-    
+
     TreeSet<Integer> javaSource = new TreeSet<>();
 
     @Test
@@ -64,6 +64,29 @@ public class OurTreeSetTest {
 
     @Test
     public void size() {
+        ourSource.add(10);
+        assertEquals(1, ourSource.size());
+
+        ourSource.add(8);
+        assertEquals(2, ourSource.size());
+
+        ourSource.add(7);
+        assertEquals(3, ourSource.size());
+
+        ourSource.add(9);
+        assertEquals(4, ourSource.size());
+
+        ourSource.add(13);
+        assertEquals(5, ourSource.size());
+
+        ourSource.add(14);
+        assertEquals(6, ourSource.size());
+
+        ourSource.add(15);
+        assertEquals(7, ourSource.size());
+
+        ourSource.remove(15);
+        assertEquals(6, ourSource.size());
     }
 
     @Test
@@ -72,28 +95,18 @@ public class OurTreeSetTest {
 
     @Test
     public void removeAll() {
-       
-            ourSource.add(10);
-            ourSource.add(8);
-            ourSource.add(7);
-            ourSource.add(9);
-            ourSource.add(13);
-            ourSource.add(14); 
-            ourSource.add(15);
-
-            ourNewSource.add(10);
-            ourNewSource.add(8);
-            ourNewSource.add(7);
-            ourNewSource.add(9);
-            ourNewSource.add(13);
-            ourNewSource.add(14);
-            ourNewSource.add(15);
-
-            
+        ourSource.add(10);
+        ourSource.add(8);
+        ourSource.add(7);
+        ourSource.add(9);
+        ourSource.add(13);
+        ourSource.add(14);
+        ourSource.add(15);
 
         assertTrue(ourSource.remove(13));
-        javaSource.remove(13);
-        System.out.println();
+        assertTrue(ourSource.remove(10));
+        assertTrue(ourSource.remove(8));
+        assertTrue(ourSource.remove(15));
     }
 
     @Test
