@@ -1,7 +1,7 @@
 package com.company.collection;
 
-import com.sun.source.tree.Tree;
 import org.junit.Test;
+
 
 import java.util.TreeSet;
 
@@ -10,8 +10,6 @@ import static org.junit.Assert.*;
 public class OurTreeSetTest {
 
     OurSet<Integer> ourSource = new OurTreeSet<>();
-    OurSet<Integer> ourNewSource = new OurTreeSet<>();
-
     TreeSet<Integer> javaSource = new TreeSet<>();
 
     @Test
@@ -115,5 +113,6 @@ public class OurTreeSetTest {
 
     @Test
     public void iterator() {
+
     }
 }
