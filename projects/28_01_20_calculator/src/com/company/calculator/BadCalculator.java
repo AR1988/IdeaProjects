@@ -9,6 +9,7 @@ public class BadCalculator implements ICalculator {
             case '-':
                 return num1 - num2;
         }
-        throw new OperationNotSupportedException();
+        OperationNotSupportedException ex = new OperationNotSupportedException();
+        throw ex;
     }
 }
