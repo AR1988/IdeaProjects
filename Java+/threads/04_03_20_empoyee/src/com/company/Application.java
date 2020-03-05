@@ -25,7 +25,7 @@ public class Application {
         long limit = 2000;
         String depSort = "111";
 
-        Stream<Department> streams = Stream.of(dep100a, dep111b);
+        Stream<Department> streams = Stream.of(dep100a, dep111b,dep121b);
 
         long res = streams.filter(dep -> dep.getCode().split("_")[0].equals(depSort))
                 .flatMap(department -> department.getEmployees().stream())
