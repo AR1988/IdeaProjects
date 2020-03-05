@@ -13,11 +13,13 @@ public class Application {
                 new Employee("Petja", 1500),
                 new Employee("Maria", 4800),
                 new Employee("Max", 2800)));
+
         List<Employee> employeeListTwo = new ArrayList<>(Arrays.asList(
                 new Employee("Katja", 1500),
                 new Employee("Max", 2000),
                 new Employee("Alex", 3000),
                 new Employee("Vovan", 1700)));
+
         Department dep100a = new Department("Sototschka", "100_a", employeeListOne);
         Department dep111b = new Department("Sototschka", "111_b", employeeListTwo);
         Department dep121b = new Department("Sototschka", "121_b", employeeListTwo);
@@ -26,7 +28,7 @@ public class Application {
         String depSort = "111";
 
         Stream<Department> streams = Stream.of(dep100a, dep111b,dep121b);
-
+        //посчитать количество рабочих, отдела 111, зарплата которых выше или равна установленной
         long res = streams.filter(dep -> dep.getCode().split("_")[0].equals(depSort))
                 .flatMap(department -> department.getEmployees().stream())
                 .filter(employee -> employee.getSalary() >= limit)
