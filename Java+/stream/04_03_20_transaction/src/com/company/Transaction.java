@@ -1,29 +1,49 @@
 package com.company;
 
 public class Transaction {
-    private String id;
-    private int status;
+    private static int incrementer;
+
+    private int id;
+    private TransactionState state;
     private long sum;
-    private long created;
+    private int accId;
 
-    /**
-     * @param id      transaction id
-     * @param status  -1 canceled, 0 processing, 1 finished
-     * @param sum     transaction sum
-     * @param created no idea
-     */
-    public Transaction(String id, int status, long sum, long created) {
-        this.id = id;
-        this.status = status;
+    public Transaction(TransactionState state, long sum) {
+        synchronized (Transaction.class) {
+            id = ++incrementer;
+        }
+        this.state = state;
         this.sum = sum;
-        this.created = created;
     }
 
-    public int getStatus() {
-        return status;
+
+    public void setId(int accIDFromAccount) {
+        this.accId = accIDFromAccount;
     }
 
-    public long getSum() {
+    public int getAccId() {
+        return accId;
+    }
+
+    public TransactionState getState() {
+        return state;
+    }
+
+    public  long getSum() {
         return sum;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", state=" + state +
+                ", sum=" + sum +
+                ", accId=" + accId +
+                '}';
+    }
+}
+
+enum TransactionState {
+    CANCELLED, FINISHED, PROCESSING
 }

@@ -1,34 +1,49 @@
 package com.company;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Account {
-    private String number;
+    private static AtomicInteger incrementer = new AtomicInteger();
+    private int id;
     private long balance;
     private List<Transaction> transactions;
 
-    public Account(String number, List<Transaction> transactions, long balance) {
-        this.number = number;
+    public Account(List<Transaction> transactions, long balance) {
+        id = incrementer.incrementAndGet();
         this.transactions = transactions;
         this.balance = balance + editBalance();
+
+        transactions.forEach(tr -> tr.setId(id));
     }
 
     public long getBalance() {
         return balance;
     }
 
+
     private long editBalance() {
         return transactions.stream()
-                .filter(tr -> tr.getStatus() == 1)
-                .mapToLong(tr -> tr.getSum())
+                .filter(tr -> tr.getState() == TransactionState.FINISHED)
+//                .mapToLong(tr -> tr.getSum())
+                .mapToLong(Transaction::getSum)
                 .sum();
     }
 
-    public long getSumCanceledTransactions() {
-        return transactions
-                .stream()
-                .filter(tr -> tr.getStatus() == -1)
-                .mapToLong(Transaction::getSum)
-                .sum();
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", transactions=" + transactions +
+                '}';
     }
 }
