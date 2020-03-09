@@ -33,7 +33,7 @@ public class Application {
 
         Utils utils = new Utils();
         //группировка по имени url.
-        System.out.println(utils.linkCliced(logEntries.stream()).toString());           //количесвто вызовов url
+        System.out.println(utils.linkClicked(logEntries.stream()).toString());           //количесвто вызовов url
         System.out.println(utils.usersByUrl(logEntries.stream()).toString());           //количесвто уникальных пользователей
         System.out.println(utils.usersByUrl_UsersList(logEntries.stream()).toString()); //список пользователей и из количество
     }

@@ -32,7 +32,7 @@ public class Utils {
                 );
     }
 
-    public Map<String, Long> linkCliced(Stream<LogEntry> stream) {
+    public Map<String, Long> linkClicked(Stream<LogEntry> stream) {
         return stream
                 .collect(groupingBy(LogEntry::getUrl
                         , counting()
