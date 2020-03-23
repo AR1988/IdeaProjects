@@ -17,7 +17,7 @@ public class ServerLoad implements Runnable {
             InetAddress serverIP = InetAddress.getByName(SERVER_HOST);
 
             while (true) {
-                dataSend(socket, serverIP, String.valueOf(Thread.activeCount()));
+                dataSend(socket, serverIP, Thread.activeCount() + "_" + Main.getPORT());
                 Thread.sleep(3000);
             }
         } catch (InterruptedException | IOException e) {
@@ -35,6 +35,5 @@ public class ServerLoad implements Runnable {
                 SERVER_PORT
         );
         socket.send(packetOut);
-
     }
 }

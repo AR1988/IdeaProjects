@@ -38,7 +38,11 @@ public class ServerRequest implements Runnable {
                 String newLine = socketInput2.readLine();
                 //отправляем клиенту обработанные данные
                 socketOutput.println(newLine);
-                //ВОПРОС - > нужно ли закрывать сокеты?
+
+                socket.close();
+                socketInput.close();
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();

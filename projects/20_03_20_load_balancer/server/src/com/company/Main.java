@@ -24,4 +24,8 @@ public class Main {
             executor.execute(serverTask);
         }
     }
+
+    public static int getPORT() {
+        return PORT;
+    }
 }

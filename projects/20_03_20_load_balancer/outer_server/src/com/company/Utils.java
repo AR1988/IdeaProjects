@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
-    private static final int DATA_SIZE = 128;
-    private final static int SERVER_PORT = 2014; //порт куда кидать сообщение
+    private static final int DATA_SIZE = 1024;
+    private final static int SERVER_PORT = 2015; //порт куда кидать сообщение
     private final static String SERVER_HOST = "localhost"; // адрес куда кида кидать сообщение
 
     private DatagramSocket socket;
@@ -21,8 +21,9 @@ public class Utils {
      */
 
     public Utils() throws SocketException {
-        this.socket = new DatagramSocket();
+        this.socket = new DatagramSocket(SERVER_PORT);
     }
+
     /*
      конструктор принимает сокет, адрес и порт балансера
      */
@@ -34,10 +35,9 @@ public class Utils {
 //#endregion //
 
     public Socket bestServerLoad() throws IOException {
-//        serverLoadAsk();
-//        gettingAnswerFromLoadBalancer();
-//        return serverDeparture();
-        return new Socket("localhost", 3033);
+        serverLoadAsk();
+        return serverDeparture();
+//        return new Socket("127.0.0.1", 3033);
 
     }
 
@@ -72,11 +72,12 @@ public class Utils {
                 dataToReceive,
                 DATA_SIZE
         );
+
         socket.receive(packetIn);
 
         String line = new String(dataToReceive, 0, packetIn.getLength());
         String[] strings = line.split("_");
-
+        System.out.println("paket: " + line);
         // ответ какой сервер менее загружен. Должен содержать адрес и порт сервера.
         return Arrays.asList(strings[0], strings[1]);
     }
@@ -87,7 +88,9 @@ public class Utils {
      * @return new Socket с указанным адресом от балансировщика
      */
     private Socket serverDeparture() throws IOException {
+        gettingAnswerFromLoadBalancer();
         List<String> list = gettingAnswerFromLoadBalancer();
+        System.out.println(list.toString());
         return new Socket(list.get(0)
                 , Integer.parseInt(list.get(1)));
     }
