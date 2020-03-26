@@ -1,7 +1,7 @@
 package com.company;
 
 import com.company.updService.ListeningOuterServer;
-import com.company.updService.updConnection;
+import com.company.updService.ListeningHandlersServer;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -23,9 +23,9 @@ public class LoadBalancer {
         DatagramSocket listeningOuterServer = new DatagramSocket(OUTERSERVER_PORT);
 
         List<Thread> threads = Arrays.asList(
-                new Thread(new updConnection(listeningServerLoad, source)),
+                new Thread(new ListeningHandlersServer(listeningServerLoad, source)),
                 new Thread(new ListeningOuterServer(listeningOuterServer, source)),
-                new Thread(new CheckServers(source))
+                new Thread(new CheckServersStatus(source))
         );
         ConcurrentLinkedQueue<Thread> concurrentLinkedQueue = new ConcurrentLinkedQueue(threads);
 
