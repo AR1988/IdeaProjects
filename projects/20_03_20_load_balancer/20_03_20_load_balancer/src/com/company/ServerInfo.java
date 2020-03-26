@@ -1,18 +1,35 @@
 package com.company;
 
 import java.net.InetAddress;
+import java.time.LocalTime;
 
-public class ServerInfo {
-    private InetAddress IP;
+public class ServerInfo implements Comparable<ServerInfo> {
+    private InetAddress serverIP;
     private int serverPort;
+    private int serverLoad;
+    private LocalTime localTime = LocalTime.now();
 
-    public ServerInfo(InetAddress IP, int serverPort) {
-        this.IP = IP;
+
+    //приоритидэкю - об компэрэбл
+
+    public ServerInfo(InetAddress serverIP, int serverPort, int serverLoad) {
+        this.serverIP = serverIP;
         this.serverPort = serverPort;
+        this.serverLoad = serverLoad;
+    }
+
+
+    public LocalTime getLocalTime() {
+        return localTime;
     }
 
     @Override
     public String toString() {
-        return IP + "_" + serverPort;
+        return serverIP + "_" + serverPort;
+    }
+
+    @Override
+    public int compareTo(ServerInfo o) {
+        return Integer.compare(this.serverLoad, o.serverLoad);
     }
 }

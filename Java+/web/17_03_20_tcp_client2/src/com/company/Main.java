@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Main {
 
-    final static int PORT = 3000;
+    final static int PORT = 2220;
     final static String HOST = "localhost";
 
     public static void main(String[] args) throws IOException {

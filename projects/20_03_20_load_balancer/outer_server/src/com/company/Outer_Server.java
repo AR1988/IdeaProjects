@@ -19,6 +19,7 @@ public class Outer_Server {
             System.out.println("new connection!"); //проверям пришло соеденение
             Runnable serverTask = new Thread(new ServerRequest(socket)); // новым потоком перенаправляем
             executor.execute(serverTask); //запускаем поток
+
         }
     }
 }

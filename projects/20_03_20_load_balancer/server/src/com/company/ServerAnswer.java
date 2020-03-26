@@ -23,8 +23,10 @@ public class ServerAnswer implements Runnable {
 
             String line;
             while ((line = socketInput.readLine()) != null) {
+                System.out.println("old line: " + line);
                 line = "hello " + line;
                 socketOutput.println(line);
+                System.out.println("send line: " + line);
             }
             socket.close();
             System.out.println("socket closed: " + socket.isClosed());

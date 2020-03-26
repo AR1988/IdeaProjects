@@ -8,10 +8,10 @@ import java.net.Socket;
 
 public class Main {
 
-    final static int PORT = 3000;
+    final static int PORT = 3020;
     final static String HOST = "localhost";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Socket socket = new Socket(HOST, PORT);
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
@@ -19,12 +19,14 @@ public class Main {
         PrintStream socketOutput = new PrintStream(socket.getOutputStream());
         BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        String line;
-        while ((line = consoleReader.readLine()) != null && !line.equals("exit")) {
+        for (int i = 0; i < 2; i++) {
+            Thread.sleep(800);
+            String line = "hello!";
+
             socketOutput.println(line);
             line = socketInput.readLine();
-            System.out.println("Response from server: " + line);
         }
+        System.out.println("fin");
         socket.close();
     }
 }

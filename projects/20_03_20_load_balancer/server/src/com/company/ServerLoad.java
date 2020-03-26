@@ -15,10 +15,9 @@ public class ServerLoad implements Runnable {
         try {
             DatagramSocket socket = new DatagramSocket();
             InetAddress serverIP = InetAddress.getByName(SERVER_HOST);
-
             while (true) {
                 dataSend(socket, serverIP, Thread.activeCount() + "_" + Main.getPORT());
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             }
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
