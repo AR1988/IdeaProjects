@@ -9,27 +9,23 @@ public class ServerInfo implements Comparable<ServerInfo> {
     private int serverLoad;
     private LocalTime localTime = LocalTime.now();
 
-
-    //приоритидэкю - об компэрэбл
-
     public ServerInfo(InetAddress serverIP, int serverPort, int serverLoad) {
         this.serverIP = serverIP;
         this.serverPort = serverPort;
         this.serverLoad = serverLoad;
     }
 
-
     public LocalTime getLocalTime() {
         return localTime;
     }
 
     @Override
-    public String toString() {
-        return serverIP + "_" + serverPort;
+    public int compareTo(ServerInfo o) {
+        return Integer.compare(this.serverLoad, o.serverLoad);
     }
 
     @Override
-    public int compareTo(ServerInfo o) {
-        return Integer.compare(this.serverLoad, o.serverLoad);
+    public String toString() {
+        return serverIP + "_" + serverPort;
     }
 }
