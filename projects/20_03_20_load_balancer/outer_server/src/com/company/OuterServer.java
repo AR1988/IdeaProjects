@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Outer_Server {
+public class OuterServer {
 
     final static int PORT = 3020;
 

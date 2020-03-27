@@ -19,13 +19,12 @@ public class Main {
         PrintStream socketOutput = new PrintStream(socket.getOutputStream());
         BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        for (int i = 0; i < 2; i++) {
-            Thread.sleep(800);
+;
             String line = "hello!";
-
             socketOutput.println(line);
             line = socketInput.readLine();
-        }
+
+        System.out.println(line);
         System.out.println("fin");
         socket.close();
     }
