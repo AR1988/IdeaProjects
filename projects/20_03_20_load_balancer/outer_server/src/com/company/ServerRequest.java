@@ -8,12 +8,10 @@ import java.net.*;
 import java.util.Arrays;
 
 public class ServerRequest implements Runnable {
-    //    Utils utils; // пока без полезно, получаем адрес сервера. Сейчас возвращает "new Socket("localhost", 3033)";
     Socket socket;
 
     public ServerRequest(Socket socket) throws SocketException {
         this.socket = socket;
-//        utils = new Utils();
     }
 
     private final static int SERVER_PORT = 2015;
@@ -55,7 +53,6 @@ public class ServerRequest implements Runnable {
     private Socket requestFunc() throws IOException {
         DatagramSocket socket = new DatagramSocket();
         InetAddress serverIP = InetAddress.getByName(SERVER_HOST);
-
         //send the data back
         byte[] dataOut = "request".getBytes();
         DatagramPacket packetOut = new DatagramPacket(
@@ -65,7 +62,6 @@ public class ServerRequest implements Runnable {
                 SERVER_PORT
         );
         socket.send(packetOut);
-
         //receiving data
         byte[] dataReturn = new byte[DATAGRAM_SIZE];
         DatagramPacket packetReturn = new DatagramPacket(dataReturn, DATAGRAM_SIZE);
@@ -73,8 +69,6 @@ public class ServerRequest implements Runnable {
 
         String line = new String(dataReturn, 0, packetReturn.getLength());
         String[] strings = line.split("_");
-
-        System.out.println(Arrays.toString(strings));
         return new Socket(strings[0], Integer.parseInt(strings[1]));
     }
 }
