@@ -5,34 +5,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerAnswer implements Runnable {
     private Socket socket;
+    private AtomicInteger serverLoad;
 
-    public ServerAnswer(Socket socket) {
+    public ServerAnswer(Socket socket, AtomicInteger serverLoad) {
         this.socket = socket;
+        this.serverLoad = serverLoad;
     }
-
 
     @Override
     public void run() {
-        System.out.println("connected: " + socket.isConnected());
         try {
             BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintStream socketOutput = new PrintStream(socket.getOutputStream());
-
-            String line;
-            while ((line = socketInput.readLine()) != null) {
-                System.out.println("old line: " + line);
-                line = "hello " + line;
-                socketOutput.println(line);
-                System.out.println("send line: " + line);
-            }
+            System.out.println("new connection");
+            String line = socketInput.readLine();
+            System.out.println("old line: " + line);
+            line = "hello " + line;
+            socketOutput.println(line);
+            System.out.println("send line: " + line);
             socket.close();
-            System.out.println("socket closed: " + socket.isClosed());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        serverLoad.decrementAndGet();
     }
 }
