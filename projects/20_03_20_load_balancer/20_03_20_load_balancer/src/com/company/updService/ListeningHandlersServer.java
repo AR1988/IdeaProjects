@@ -7,17 +7,20 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ListeningHandlersServer implements Runnable {
     DatagramSocket socket;
+    int port;
     Source source;
     private static final int DATA_SIZE = 1024;
 
-    public ListeningHandlersServer(DatagramSocket socket, Source source) {
-        this.socket = socket;
+    public ListeningHandlersServer(Source source, int port) throws SocketException {
         this.source = source;
+        this.port = port;
+        this.socket = new DatagramSocket(port);
     }
 
     @Override
@@ -37,6 +40,7 @@ public class ListeningHandlersServer implements Runnable {
                     InetAddress serverIp = packetIn.getAddress();
                     int serverPort = Integer.parseInt(strings[1]);
                     source.add(new ServerInfo(serverIp, serverPort, serverLoad));
+                    System.out.println("port: " + serverPort + "\tload:" + serverLoad);
                 });
 
             } catch (IOException e) {

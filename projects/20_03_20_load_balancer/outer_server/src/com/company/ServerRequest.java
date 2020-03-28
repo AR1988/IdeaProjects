@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
-import java.util.Arrays;
 
 public class ServerRequest implements Runnable {
     Socket socket;

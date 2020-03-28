@@ -1,21 +1,24 @@
 package com.company.updService;
 
 import com.company.ServerInfo;
+import com.company.Source;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.PriorityQueue;
 
 public class ListeningOuterServer implements Runnable {
-    DatagramSocket socket;
-    PriorityQueue<ServerInfo> source;
-
+    Source source;
+    int port;
     private static final int DATA_SIZE = 1024;
+    DatagramSocket socket;
 
-    public ListeningOuterServer(DatagramSocket socket, PriorityQueue<ServerInfo> source) {
-        this.socket = socket;
+    public ListeningOuterServer(Source source, int port) throws SocketException {
         this.source = source;
+        this.port = port;
+        this.socket = new DatagramSocket(port);
     }
 
     @Override
