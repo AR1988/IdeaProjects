@@ -12,29 +12,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Main {
-
-    //    final static int PORT = 3003;
     private static final String FILE_DIRECTORY = "C:/Users/andre/IdeaProjects/projects/20_03_20_load_balancer/config/config.props";
-    private static final String SERVER_PORT = "SERVER_1_PORT";
+    private static final String SERVER_1_PORT = "SERVER_1_PORT";
+
 
     public static void main(String[] args) throws IOException {
         AtomicInteger serverLoad = new AtomicInteger(0);
 
         ConfigReader configReader = new ConfigReader(FILE_DIRECTORY);
-        int portServer = Integer.parseInt(configReader.loadParamFromConfig(SERVER_PORT));
+        int portServer1 = Integer.parseInt(configReader.loadParamFromConfig(SERVER_1_PORT));
 
-        ServerSocket server = new ServerSocket(portServer);
+        ServerSocket server1 = new ServerSocket(portServer1);
+
+        Thread serverLoadThread = new Thread(new ServerLoad(serverLoad, portServer1, configReader));
+        serverLoadThread.start();
 
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
-        Thread serverLoadThread = new Thread(new ServerLoad(serverLoad, portServer,configReader));
-        serverLoadThread.start();
-
         while (true) {
-            Socket socket = server.accept();
-            System.out.println("new connection!");
+            Socket socket = server1.accept();
             serverLoad.incrementAndGet();
-            Runnable serverTask = new ServerAnswer(socket, serverLoad);
+            ServerAnswer serverTask = new ServerAnswer(socket, serverLoad, 1);
 
             executor.execute(serverTask);
         }

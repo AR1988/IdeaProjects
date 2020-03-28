@@ -10,18 +10,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerLoad implements Runnable {
 
-    //    private final static int SERVER_PORT = 2014; //порт куда кидать сообщение
-//    private final static String SERVER_HOST = "localhost"; // адрес куда кида кидать сообщение
     private AtomicInteger serverLoad;
     private int thisServerPort;
-    int loadBalancerPort;
-    String loadBalancerIP;
+    int loadBalancePort;
+    String loadBalanceIP;
 
     public ServerLoad(AtomicInteger serverLoad, int thisServerPort, ConfigReader configReader) throws IOException {
         this.serverLoad = serverLoad;
         this.thisServerPort = thisServerPort;
-        this.loadBalancerPort = Integer.parseInt(configReader.loadParamFromConfig("LOADBALANCER_PORT_FOR_SERVERS"));
-        this.loadBalancerIP = configReader.loadParamFromConfig("LOADBALANCER_IP_FOR_SERVERS");
+        this.loadBalancePort = Integer.parseInt(configReader.loadParamFromConfig("LOADBALANCE_PORT_FOR_SERVERS"));
+        this.loadBalanceIP = configReader.loadParamFromConfig("LOADBALANCE_IP");
 
     }
 
@@ -29,24 +27,24 @@ public class ServerLoad implements Runnable {
     public void run() {
         try {
             DatagramSocket socket = new DatagramSocket();
-            InetAddress serverIP = InetAddress.getByName(loadBalancerIP);
+            InetAddress loadBalanceServerIP = InetAddress.getByName(loadBalanceIP);
             while (true) {
-                dataSend(socket, serverIP, serverLoad + "_" + thisServerPort);
-                Thread.sleep(1000);
+                dataSend(socket, loadBalanceServerIP, serverLoad + "_" + thisServerPort);
+                Thread.sleep(500);
             }
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void dataSend(DatagramSocket socket, InetAddress serverIP, String line) throws IOException {
+    private void dataSend(DatagramSocket socket, InetAddress loadBalanceServerIP, String line) throws IOException {
 
         byte[] dataOut = line.getBytes();
         DatagramPacket packetOut = new DatagramPacket(
                 dataOut,
                 dataOut.length,
-                serverIP,
-                loadBalancerPort
+                loadBalanceServerIP,
+                loadBalancePort
         );
         socket.send(packetOut);
     }

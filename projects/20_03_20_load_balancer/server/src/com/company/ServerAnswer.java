@@ -10,10 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ServerAnswer implements Runnable {
     private Socket socket;
     private AtomicInteger serverLoad;
+    private int serverName;
 
-    public ServerAnswer(Socket socket, AtomicInteger serverLoad) {
+    public ServerAnswer(Socket socket, AtomicInteger serverLoad, int serverName) {
         this.socket = socket;
         this.serverLoad = serverLoad;
+        this.serverName = serverName;
     }
 
     @Override
@@ -21,12 +23,10 @@ public class ServerAnswer implements Runnable {
         try {
             BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintStream socketOutput = new PrintStream(socket.getOutputStream());
-            System.out.println("new connection");
             String line = socketInput.readLine();
-            System.out.println("old line: " + line);
-            line = "hello " + line;
+            line = "Answer from server NR: " + serverName + "\tresult: " + line.toUpperCase();
             socketOutput.println(line);
-            System.out.println("send line: " + line);
+            System.out.println(line);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
