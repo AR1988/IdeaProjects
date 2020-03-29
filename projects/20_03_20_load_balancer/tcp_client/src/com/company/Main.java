@@ -1,54 +1,32 @@
 package com.company;
 
-import java.io.BufferedReader;
+import com.company.configServices.ConfigReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
-    //    final static int PORT = 3020;
-    final static int PORT = 3003;
-    final static String HOST = "localhost";
+    private static final String FILE_DIRECTORY = "C:/Users/andre/IdeaProjects/projects/20_03_20_load_balancer/config/config.props";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Socket socket = new Socket(HOST, PORT);
+    private static final String OUTER_SERVER_PORT = "OUTER_SERVER_PORT";
+    private static final String OUTER_SERVER_IP = "OUTER_SERVER_IP";
+    private static final String CLIENT_TASK_NUMBER = "CLIENT_TASK_NUMBER";
 
-        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        ConfigReader configReader = new ConfigReader(FILE_DIRECTORY);
+        String outerServerIP = configReader.loadParamFromConfig(OUTER_SERVER_IP);
+        int outerServerPort = Integer.parseInt(configReader.loadParamFromConfig(OUTER_SERVER_PORT));
+        int taskNumber = Integer.parseInt(configReader.loadParamFromConfig(CLIENT_TASK_NUMBER));
 
-        PrintStream socketOutput = new PrintStream(socket.getOutputStream());
-        BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        ExecutorService executor = Executors.newFixedThreadPool(taskNumber);
 
-        Thread thread =
-                new Thread(() -> {
-                    String line = "Запрос";
-                    socketOutput.println(line);
-                    try {
-                        line = socketInput.readLine();
-                        System.out.println("Response from server: " + line);
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        List<Thread> threadList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            threadList.add(thread);
+        for (int i = 0; i <= taskNumber; i++) {
+            Runnable taskToServer = new MyTask(outerServerIP, outerServerPort, "\tline nr: " + i);
+            executor.execute(taskToServer);
         }
-        System.out.println(threadList.toString());
-        for (Thread th : threadList) {
-            th.start();
-            th.join();
-        }
-        for (Thread th : threadList) {
-
-        }
+        executor.shutdown();
     }
 }
 
