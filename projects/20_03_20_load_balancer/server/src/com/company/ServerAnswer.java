@@ -10,9 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ServerAnswer implements Runnable {
     private Socket socket;
     private AtomicInteger serverLoad;
-    private int serverName;
+    private String serverName;
 
-    public ServerAnswer(Socket socket, AtomicInteger serverLoad, int serverName) {
+    public ServerAnswer(Socket socket, AtomicInteger serverLoad, String serverName) {
         this.socket = socket;
         this.serverLoad = serverLoad;
         this.serverName = serverName;
@@ -24,7 +24,7 @@ public class ServerAnswer implements Runnable {
             BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintStream socketOutput = new PrintStream(socket.getOutputStream());
             String line = socketInput.readLine();
-            line = "Answer from server NR: " + serverName + "\tresult: " + line.toUpperCase();
+            line = "Answer from server NR: " + serverName + "\tresult: " + line.toUpperCase() + "\tserver Load: " + serverLoad;
             socketOutput.println(line);
             System.out.println(line);
             socket.close();
