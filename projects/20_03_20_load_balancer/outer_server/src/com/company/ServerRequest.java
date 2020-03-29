@@ -4,18 +4,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class ServerRequest implements Runnable {
-    Socket socket;
+    private Socket socket;
+    private String loadBalanceIP;
+    int loadBalancePort;
 
-    public ServerRequest(Socket socket) throws SocketException {
+    private int datagramSize;
+
+    public ServerRequest(Socket socket, String loadBalanceIP, int loadBalancePort, int datagramSize) {
         this.socket = socket;
+        this.loadBalanceIP = loadBalanceIP;
+        this.loadBalancePort = loadBalancePort;
+        this.datagramSize = datagramSize;
     }
-
-    private final static int SERVER_PORT = 2015;
-    private final static String SERVER_HOST = "localhost";
-    private static final int DATAGRAM_SIZE = 1024;
 
     @Override
     public void run() {
@@ -23,26 +29,23 @@ public class ServerRequest implements Runnable {
             //новый сокет для отправки на сервер
             Socket socketOut = requestFunc();
             //достаем данные из клиетского запроса
-            PrintStream clientSocketOutput = new PrintStream(socket.getOutputStream());
+            PrintStream clientOutputStream = new PrintStream(socket.getOutputStream());
             //возвращаем обработанные данные клиенту
-            BufferedReader clientSocketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader clientInputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            PrintStream socketOutput = new PrintStream(socketOut.getOutputStream());
-            BufferedReader socketInput = new BufferedReader(new InputStreamReader(socketOut.getInputStream()));
+            PrintStream serverOutputStream = new PrintStream(socketOut.getOutputStream());
+            BufferedReader serverInputReader = new BufferedReader(new InputStreamReader(socketOut.getInputStream()));
 
             //клиенские данные
-            String line = clientSocketInput.readLine();
-            System.out.println("old line: " + line);
+            String line = clientInputReader.readLine();
             //отпраляем через второй сокет на сервер для обработки
-            socketOutput.println(line);
+            serverOutputStream.println(line);
             //получаем обработанные данные от сервера
-            String newLine = socketInput.readLine();
-            System.out.println("new line from server: " + line);
+            String newLine = serverInputReader.readLine();
             //отправляем клиенту обработанные данные
-            clientSocketOutput.println(newLine);
-            System.out.println("send line: " + newLine);
+            clientOutputStream.println(newLine);
             socket.close();
-            clientSocketInput.close();
+            clientInputReader.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,23 +54,26 @@ public class ServerRequest implements Runnable {
 
     private Socket requestFunc() throws IOException {
         DatagramSocket socket = new DatagramSocket();
-        InetAddress serverIP = InetAddress.getByName(SERVER_HOST);
+        InetAddress serverIP = InetAddress.getByName(loadBalanceIP);
         //send the data back
         byte[] dataOut = "request".getBytes();
         DatagramPacket packetOut = new DatagramPacket(
                 dataOut,
                 dataOut.length,
                 serverIP,
-                SERVER_PORT
+                loadBalancePort
         );
         socket.send(packetOut);
-        //receiving data
-        byte[] dataReturn = new byte[DATAGRAM_SIZE];
-        DatagramPacket packetReturn = new DatagramPacket(dataReturn, DATAGRAM_SIZE);
-        socket.receive(packetReturn);
 
+        //receiving data
+        byte[] dataReturn = new byte[datagramSize];
+        DatagramPacket packetReturn = new DatagramPacket(dataReturn, datagramSize);
+        socket.receive(packetReturn);
         String line = new String(dataReturn, 0, packetReturn.getLength());
         String[] strings = line.split("_");
+
+        System.out.println("send to server: \tIP: " + strings[0] + "\tPort: " + strings[1]);
+
         return new Socket(strings[0], Integer.parseInt(strings[1]));
     }
 }
