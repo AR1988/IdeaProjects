@@ -12,40 +12,57 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ListeningHandlersServer implements Runnable {
-    DatagramSocket socket;
-    int port;
-    Source source;
-    private static final int DATA_SIZE = 1024;
+    private Source source;
+    private DatagramSocket socket;
+    int threads;
+    private int dataSize;
 
-    public ListeningHandlersServer(Source source, int port) throws SocketException {
+    public ListeningHandlersServer(Source source, int port, int threads, int dataSize) throws SocketException {
         this.source = source;
-        this.port = port;
         this.socket = new DatagramSocket(port);
+        this.threads = threads;
+        this.dataSize = dataSize;
     }
 
     @Override
     public void run() {
-        //завести экзикютор
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        ExecutorService executorService = Executors.newFixedThreadPool(threads);
         while (true) {
             try {
-                byte[] dataToReceive = new byte[DATA_SIZE];
-                DatagramPacket packetIn = new DatagramPacket(dataToReceive, DATA_SIZE);
+                byte[] dataToReceive = new byte[dataSize];
+                DatagramPacket packetIn = new DatagramPacket(dataToReceive, dataSize);
                 this.socket.receive(packetIn);
-                executorService.execute(() -> {
-                    String line = new String(dataToReceive, 0, packetIn.getLength());
-                    String[] strings = line.split("_");
-                    System.out.println(line);
-                    int serverLoad = Integer.parseInt(strings[0]);
-                    InetAddress serverIp = packetIn.getAddress();
-                    int serverPort = Integer.parseInt(strings[1]);
-                    source.add(new ServerInfo(serverIp, serverPort, serverLoad));
-                    System.out.println("port: " + serverPort + "\tload:" + serverLoad);
-                });
+                ReceiveTask task = new ReceiveTask(source, packetIn, dataToReceive);
+                executorService.execute(task);
 
             } catch (IOException e) {
                 continue;
             }
         }
+    }
+}
+
+class ReceiveTask implements Runnable {
+    private Source source;
+    private DatagramPacket packetIn;
+    private byte[] dataToReceive;
+
+    public ReceiveTask(Source source, DatagramPacket packetIn, byte[] dataToReceive) {
+        this.source = source;
+        this.packetIn = packetIn;
+        this.dataToReceive = dataToReceive;
+    }
+
+    @Override
+    public void run() {
+        String line = new String(dataToReceive, 0, packetIn.getLength());
+        String[] strings = line.split("_");
+
+        int serverLoad = Integer.parseInt(strings[0]);
+        InetAddress serverIp = packetIn.getAddress();
+        int serverPort = Integer.parseInt(strings[1]);
+
+        source.add(new ServerInfo(serverIp, serverPort, serverLoad));
+        System.out.println("port: " + serverPort + "\tload: " + serverLoad + "\tsize: " + source.size());
     }
 }
