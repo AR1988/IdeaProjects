@@ -26,6 +26,8 @@ debug/
 *.xml
 *.rar
 *.txt
+*.lcok
+*.properties
 
 thumbs.db
 .DS_Store
