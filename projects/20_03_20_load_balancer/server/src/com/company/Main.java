@@ -18,7 +18,7 @@ public class Main {
 
     private static final String SERVER_PORT = "SERVER_PORT";
     private static final String SERVER_NAME = "SERVER_NAME";
-    private static final String SERVER_THREADS = "SERVER_THREADS";
+    private static final String THREADS = "THREADS";
 
     private static final String START_LOAD_SERV = "START_LOAD_SERV";
     private static final String LOAD_UPDATE_TIME = "LOAD_UPDATE_TIME";
@@ -33,7 +33,7 @@ public class Main {
         int portServer1 = Integer.parseInt(configReader.loadParamFromConfig(SERVER_PORT));
         int startLoad = Integer.parseInt(configReader.loadParamFromConfig(START_LOAD_SERV));
         String serverName1 = configReader.loadParamFromConfig(SERVER_NAME);
-        int nThreads = Integer.parseInt(configReader.loadParamFromConfig(SERVER_THREADS));
+        int nThreads = Integer.parseInt(configReader.loadParamFromConfig(THREADS));
         long timeForUpdate = Integer.parseInt(configReader.loadParamFromConfig(LOAD_UPDATE_TIME));
         int loadBalancePort = Integer.parseInt(configReader.loadParamFromConfig(LOADBALANCE_PORT));
         String loadBalanceIP = configReader.loadParamFromConfig(LOADBALANCE_IP);
