@@ -10,19 +10,20 @@ import java.util.concurrent.Executors;
 
 public class OuterServer {
 
-    private static final String FILE_DIRECTORY = "C:/Users/andre/IdeaProjects/projects/20_03_20_load_balancer/config/config.props";
+    private static final String FILE_DIRECTORY = "config/config.props";
+
     private static final String OUTER_SERVER_PORT = "OUTER_SERVER_PORT";
 
     private static final String LOADBALANCE_PORT_FOR_OUTERSERVER = "LOADBALANCE_PORT_FOR_OUTERSERVER";
     private static final String LOADBALANCE_IP = "LOADBALANCE_IP";
 
     private static final String DATA_SIZE_TO_RECIVE = "DATA_SIZE_TO_RECIVE";
-    private static final String GET_THREADS_OUTERSERVER = "THREADS_OUTERSERVER";
+    private static final String THREADS = "THREADS";
 
     public static void main(String[] args) throws IOException {
         ConfigReader configReader = new ConfigReader(FILE_DIRECTORY);
         int port = Integer.parseInt(configReader.loadParamFromConfig(OUTER_SERVER_PORT));
-        int executorThreads = Integer.parseInt(configReader.loadParamFromConfig(GET_THREADS_OUTERSERVER));
+        int executorThreads = Integer.parseInt(configReader.loadParamFromConfig(THREADS));
 
         String loadBalanceIP = configReader.loadParamFromConfig(LOADBALANCE_IP);
         int loadBalancePort = Integer.parseInt(configReader.loadParamFromConfig(LOADBALANCE_PORT_FOR_OUTERSERVER));
