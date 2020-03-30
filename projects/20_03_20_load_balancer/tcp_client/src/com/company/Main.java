@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 public class Main {
 
-    private static final String FILE_DIRECTORY = "C:/Users/andre/IdeaProjects/projects/20_03_20_load_balancer/config/config.props";
+    private static final String FILE_DIRECTORY = "config/config.props";
 
     private static final String OUTER_SERVER_PORT = "OUTER_SERVER_PORT";
     private static final String OUTER_SERVER_IP = "OUTER_SERVER_IP";
