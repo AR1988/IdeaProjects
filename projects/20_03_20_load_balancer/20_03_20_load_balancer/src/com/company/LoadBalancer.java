@@ -15,11 +15,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class LoadBalancer {
-    private static final String CONFIG_FILE_DIRECTORY = "C:/Users/andre/IdeaProjects/projects/20_03_20_load_balancer/config/config.props";
+    private static final String CONFIG_FILE_DIRECTORY = "config/config.props";
+
     private static final String LOADBALANCE_PORT_FOR_SERVERS = "LOADBALANCE_PORT_FOR_SERVERS";
     private static final String LOADBALANCE_PORT_FOR_OUTERSERVER = "LOADBALANCE_PORT_FOR_OUTERSERVER";
-
-    private static final String LOADBALANCE_IP = "LOADBALANCE_IP";
 
     private static final String DATA_SIZE_TO_RECIVE = "DATA_SIZE_TO_RECIVE";
     private static final String THREADS_FOR_LISTENING_SERVER = "THREADS_FOR_LISTENING_SERVER";
