@@ -26,7 +26,7 @@ public class CheckServerStatus implements Runnable {
     @Override
     public void run() {
         LocalTime timeNow = LocalTime.now();
-        System.out.println("\t" + source.size() + "\t udpate time: " + updateTime);
+//        System.out.println("\t" + source.size() + "\t udpate time: " + updateTime);
         source.removeIf(si -> (si.getLocalTime().until(timeNow, ChronoUnit.SECONDS)) > updateTime);
     }
 }

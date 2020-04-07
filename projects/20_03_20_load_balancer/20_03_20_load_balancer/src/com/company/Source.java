@@ -9,6 +9,7 @@ public class Source extends PriorityQueue<ServerInfo> {
         this.source = source;
     }
 
+    //TODO: синхронизировать
     @Override
     public boolean add(ServerInfo serverInfo) {
         source.removeIf(si -> si.toString().equals(serverInfo.toString()));
@@ -22,6 +23,7 @@ public class Source extends PriorityQueue<ServerInfo> {
                 '}';
     }
 
+    //TODO: синхронизировать
     @Override
     public ServerInfo peek() {
         return source.peek();

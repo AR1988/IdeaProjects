@@ -2,6 +2,7 @@ package com.company;
 
 import java.net.InetAddress;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class ServerInfo implements Comparable<ServerInfo> {
     private InetAddress serverIP;
@@ -27,5 +28,10 @@ public class ServerInfo implements Comparable<ServerInfo> {
     @Override
     public String toString() {
         return serverIP + "_" + serverPort;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serverIP, serverPort);
     }
 }

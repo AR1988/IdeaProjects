@@ -61,7 +61,7 @@ class ReceiveTask implements Runnable {
         int serverLoad = Integer.parseInt(strings[0]);
         InetAddress serverIp = packetIn.getAddress();
         int serverPort = Integer.parseInt(strings[1]);
-
+        System.out.println("Port:\t" + serverPort + "\tserverLoad:\t" + serverLoad);
         source.add(new ServerInfo(serverIp, serverPort, serverLoad));
         System.out.println("port: " + serverPort + "\tload: " + serverLoad + "\tsize: " + source.size());
     }

@@ -20,7 +20,8 @@ public class Main {
         int outerServerPort = Integer.parseInt(configReader.loadParamFromConfig(OUTER_SERVER_PORT));
         int taskNumber = Integer.parseInt(configReader.loadParamFromConfig(CLIENT_TASK_NUMBER));
 
-        ExecutorService executor = Executors.newFixedThreadPool(taskNumber);
+        int clientsNumber = 10;
+        ExecutorService executor = Executors.newFixedThreadPool(clientsNumber);
 
         for (int i = 0; i <= taskNumber; i++) {
             Runnable taskToServer = new MyTask(outerServerIP, outerServerPort, "\tline nr: " + i);

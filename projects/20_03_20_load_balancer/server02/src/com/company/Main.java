@@ -29,9 +29,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ConfigReader configReader = new ConfigReader(FILE_DIRECTORY);
-        //TODO: параметры для jar
-//        int portServer1 = Integer.parseInt(configReader.loadParamFromConfig(SERVER_PORT));
-        int portServer = Integer.parseInt(args[0]);
+
+        int portServer1 = Integer.parseInt(configReader.loadParamFromConfig(SERVER_PORT));
         int startLoad = Integer.parseInt(configReader.loadParamFromConfig(START_LOAD_SERV));
         String serverName1 = configReader.loadParamFromConfig(SERVER_NAME);
         int nThreads = Integer.parseInt(configReader.loadParamFromConfig(THREADS));
@@ -40,14 +39,12 @@ public class Main {
         String loadBalanceIP = configReader.loadParamFromConfig(LOADBALANCE_IP);
 
         AtomicInteger serverLoad = new AtomicInteger(startLoad);
-//        ServerSocket server1 = new ServerSocket(portServer1);
-        ServerSocket server1 = new ServerSocket(portServer);
+        ServerSocket server1 = new ServerSocket(portServer1);
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleWithFixedDelay(new ServerLoad(serverLoad,
-//                portServer1,
-                portServer,
+                portServer1,
                 loadBalancePort,
                 loadBalanceIP), timeForUpdate, timeForUpdate, TimeUnit.MILLISECONDS);
 
