@@ -19,11 +19,7 @@ public interface IUtils {
 
     AddressDTO convertFromAddressToAddressDTO(Address address);
 
-    ContactDTO convertFromContactToContactDTO(Contact contact);
+    ContactDTO convertFromContactToContactDTO(Contact contact, List<PhoneNumberDTO> phones, List<AddressDTO> addresses);
 
     Contact convertFromContactDTOToContact(ContactDTO contactDTO);
-
-    List<PhoneNumberDTO> getAllPhonesByContact(Contact contact);
-
-    List<AddressDTO> getAllAddressesByContact(Contact contact);
 }

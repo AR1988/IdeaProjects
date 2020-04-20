@@ -8,14 +8,15 @@ import java.util.List;
 
 @Transactional
 @Service
-public interface IAddressService {
+public interface IAddressService{
 
     void createAddress(AddressDTO addressDTO, int contactDTOId);
 
     AddressDTO editAddress(AddressDTO addressDTO, int id);
 
-    AddressDTO removeAddress(int contactDTOId, int id);
+    AddressDTO removeAddress(int id);
+
+    void removeAllAddressesByContactId (int contactId);
 
     List<AddressDTO> getAllAddressesByContactId(int id);
 }
-

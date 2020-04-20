@@ -14,7 +14,9 @@ public interface IPhoneService {
 
     PhoneNumberDTO editPhoneNumber(PhoneNumberDTO phoneNumberDTO, int id);
 
-    PhoneNumberDTO removePhoneNumber(int contactDTOId, int id);
+    PhoneNumberDTO removePhoneNumber(int id);
+
+    void removeAllPhonesByContactId (int contactId);
 
     List<PhoneNumberDTO> getAllPhoneNumberByContactId(int id);
 }
