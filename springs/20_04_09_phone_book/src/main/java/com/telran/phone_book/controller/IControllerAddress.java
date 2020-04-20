@@ -17,5 +17,5 @@ public interface IControllerAddress {
 
     AddressDTO removeAddress(@RequestParam(value = "id") @Min(1) int id);
 
-    List<AddressDTO> getAllAdressesByContactId(@RequestParam(value = "id") @Min(1) int id);
+    List<AddressDTO> getAllAddressesByContactId(@RequestParam(value = "id") @Min(1) int id);
 }

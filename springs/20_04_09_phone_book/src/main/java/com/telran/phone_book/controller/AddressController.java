@@ -43,7 +43,7 @@ public class AddressController implements IControllerAddress {
 
     @GetMapping("/get/contact-addresses")
     @Override
-    public List<AddressDTO> getAllAdressesByContactId(@RequestParam(value = "id") @Min(1) int id) {
+    public List<AddressDTO> getAllAddressesByContactId(@RequestParam(value = "id") @Min(1) int id) {
         return service.getAllAddressesByContactId(id);
     }
 }
