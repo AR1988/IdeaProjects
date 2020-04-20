@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class MemoryContactRepo implements IContactRepo {
 
     Map<Integer, Contact> source = new HashMap<>();
-    private AtomicInteger currentId = new AtomicInteger();
+    private final AtomicInteger currentId = new AtomicInteger();
 
     @Override
     public void add(Contact contact) {

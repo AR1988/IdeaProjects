@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ContactService {
 
-    private IContactRepo contactRepo;
+    private final IContactRepo contactRepo;
 
     public ContactService(IContactRepo contactRepo) {
         this.contactRepo = contactRepo;
