@@ -1,0 +1,707 @@
+{
+    "version": 6,
+    "entities": [
+        {
+            "entity": {
+                "type": "Project",
+                "id": "0ee6ff86-64f2-40a8-b783-9f5135acc491",
+                "name": "phone_book_ar"
+            },
+            "children": [
+                {
+                    "entity": {
+                        "type": "Service",
+                        "description": "addS",
+                        "id": "a5f57d90-b02f-43c6-8e07-cca6b8131a1a",
+                        "name": "add"
+                    },
+                    "children": [
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                                    "name": "POST"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{\n  \"city\":\"Berlin\",\n  \"country\":\"Germany\",\n  \"address\":\"My Street 145\",\n  \"zip\": \"10369\",\n  \"type\" : \"Privat\"\n}\n"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/add/address"
+                                },
+                                "id": "2a589b8e-0d2d-4bc8-92e5-80e4f3426c71",
+                                "name": "address",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                                    "name": "POST"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{  \n  \"name\":\"Andre\",\n  \"lastName\":\"Reutow\",\n  \"birthday\":\"22.09.2019\"\n}\n"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": []
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/add/contact"
+                                },
+                                "id": "a0f3bfe0-7449-4902-b36a-1d0679da8067",
+                                "name": "contact",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                                    "name": "POST"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{\n  \n \"code\": \"049\",   \n  \"number\": \"17684027282\",\n  \"type\": \"teee\"\n}\n\n"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/add/phone/"
+                                },
+                                "id": "8c03bb9b-0ca6-4130-b800-7c334b149b8e",
+                                "name": "phone",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entity": {
+                        "type": "Service",
+                        "id": "a38232a1-bacd-433a-8fb7-77f0fc2c78d7",
+                        "name": "edit"
+                    },
+                    "children": [
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                                    "name": "PUT"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{\n  \"city\":\"Berlin\",\n  \"country\":\"Poland\",\n  \"address\":\"My Street 145\",\n  \"zip\": \"10369\",\n  \"type\" : \"Privat\"\n}\n"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "2"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/edit/address"
+                                },
+                                "id": "8c7913e0-b410-46a2-accd-2e1c76be19b5",
+                                "name": "edit Address By ID",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                                    "name": "PUT"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{  \n  \"name\":\"Andare\",\n  \"lastName\":\"Reutow\",\n  \"birthday\":\"22.09.2019\"\n}"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/edit/contact"
+                                },
+                                "id": "af9540e0-69a9-4319-8ad3-c77cad5fcd4f",
+                                "name": "edit Contact (Contact)",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "requestBody": true,
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                                    "name": "PUT"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text",
+                                    "textBody": "{  \n \"code\": \"049\",   \n  \"number\": \"17684027282\",\n  \"type\": \"Home\"\n}\n"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "2"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/edit/phone"
+                                },
+                                "id": "bcefa0ae-f971-4b6c-ac89-fc36d999de01",
+                                "name": "edit Phone By ID",
+                                "headers": [
+                                    {
+                                        "enabled": true,
+                                        "name": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entity": {
+                        "type": "Service",
+                        "description": "get",
+                        "id": "61df83f5-3d73-4e6c-a7cb-10acb574c8b3",
+                        "name": "get"
+                    },
+                    "children": [
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/contact-addresses"
+                                },
+                                "id": "d9038a0e-71db-44ee-a4d6-9d5b6822050a",
+                                "name": "get All Addresses By Contact Id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": []
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/all"
+                                },
+                                "id": "d703913b-3296-47c9-ba84-328e0be88cc3",
+                                "name": "get All Contacts",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/contact-phones"
+                                },
+                                "id": "f1372aeb-b091-48fe-8b91-dfcdddb70da9",
+                                "name": "get All Phones By Contact Id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/contact"
+                                },
+                                "id": "12132fdd-549a-4f7b-bd87-b1969bb263e9",
+                                "name": "get Contact By Id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "last-name",
+                                                "value": "Reutow"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/by-lastname"
+                                },
+                                "id": "5122cc63-ada0-4934-a289-588432f2a4a4",
+                                "name": "get Contact By LastName",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                                    "name": "GET"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "name",
+                                                "value": "Andre"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/get/by-name"
+                                },
+                                "id": "db7cccd8-994a-43cf-a41a-33e93184601b",
+                                "name": "get Contact By Name",
+                                "headers": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entity": {
+                        "type": "Service",
+                        "description": "",
+                        "id": "805dce8e-8e53-45d0-ab22-68b3ad2ca2e3",
+                        "name": "remove"
+                    },
+                    "children": [
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                                    "name": "DELETE"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "contact-id",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "//delete/address"
+                                },
+                                "id": "d2b6de7c-7edf-4e67-ad65-5ebb5b823eea",
+                                "name": "address by id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                                    "name": "DELETE"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/delete/addresses"
+                                },
+                                "id": "16890a9f-4202-4e4f-b0ca-45927b1ab555",
+                                "name": "all addresses by contact id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                                    "name": "DELETE"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/delete/contact"
+                                },
+                                "id": "a18561e9-7824-4e1d-85e2-3e042dc2f70c",
+                                "name": "contact by id",
+                                "headers": []
+                            }
+                        },
+                        {
+                            "entity": {
+                                "type": "Request",
+                                "method": {
+                                    "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+                                    "name": "DELETE"
+                                },
+                                "body": {
+                                    "formBody": {
+                                        "overrideContentType": true,
+                                        "encoding": "application/x-www-form-urlencoded",
+                                        "items": []
+                                    },
+                                    "bodyType": "Text"
+                                },
+                                "uri": {
+                                    "query": {
+                                        "delimiter": "&",
+                                        "items": [
+                                            {
+                                                "enabled": true,
+                                                "name": "contact-id",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "enabled": true,
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    },
+                                    "scheme": {
+                                        "name": "http",
+                                        "version": "V11"
+                                    },
+                                    "host": "localhost:8080",
+                                    "path": "/delete/phone"
+                                },
+                                "id": "b553b928-9f48-4c22-8d5d-f25a4a49f8cd",
+                                "name": "phone by id",
+                                "headers": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
