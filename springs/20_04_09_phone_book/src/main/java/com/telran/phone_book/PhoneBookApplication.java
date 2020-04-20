@@ -1,13 +1,12 @@
-package com.telran.person;
+package com.telran.phone_book;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PersonApplication {
+public class PhoneBookApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PersonApplication.class, args);
+        SpringApplication.run(PhoneBookApplication.class, args);
     }
-
 }
