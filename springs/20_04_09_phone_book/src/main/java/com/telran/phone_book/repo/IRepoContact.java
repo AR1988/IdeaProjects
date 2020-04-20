@@ -7,11 +7,9 @@ import java.util.List;
 
 public interface IRepoContact extends CrudRepository<Contact, Integer> {
 
-
     List<Contact> findAll();
 
     List<Contact> findAllByName(String name);
 
     List<Contact> findAllByLastName(String lastName);
-
 }

@@ -4,6 +4,7 @@ import com.telran.phone_book.entity.Address;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IRepoAddress extends CrudRepository<Address, Integer> {
 
@@ -11,5 +12,5 @@ public interface IRepoAddress extends CrudRepository<Address, Integer> {
 
     void deleteAllByContactId(int id);
 
-    void deleteByContactIdAndId(int contactId, int id);
+    Optional<Address> deleteById(int id);
 }
