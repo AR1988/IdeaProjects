@@ -12,4 +12,5 @@ public interface IRepoContact extends CrudRepository<Contact, Integer> {
     List<Contact> findAllByName(String name);
 
     List<Contact> findAllByLastName(String lastName);
+
 }
