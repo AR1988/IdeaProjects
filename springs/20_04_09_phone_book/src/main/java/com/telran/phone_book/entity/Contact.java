@@ -6,29 +6,33 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Setter
+@Getter
 @NoArgsConstructor
 public class Contact {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    int id;
-    @Getter
-    String name;
-    @Getter
-    String lastName;
-    @Getter
-    LocalDate birthday;
+    private int id;
+
+    @Setter
+    private String name;
+
+    @Setter
+    private String lastName;
+
+    @Setter
+    private LocalDate birthday;
 
     @OneToMany(mappedBy = "contact")
-    List<PhoneNumber> phones;
+    private List<PhoneNumber> phones = new ArrayList<>();
 
     @OneToMany(mappedBy = "contact")
-    List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     public Contact(int id, String name, String lastName, LocalDate birthday) {
         this.id = id;

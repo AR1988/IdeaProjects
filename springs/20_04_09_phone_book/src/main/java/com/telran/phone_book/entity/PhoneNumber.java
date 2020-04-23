@@ -9,24 +9,34 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
-
 public class PhoneNumber {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    int code;
-    long number;
-    String type;
+    private int id;
+
+    @Setter
+    @Getter
+    private int code;
+
+    @Setter
+    @Getter
+    private long number;
+
+    @Setter
+    @Getter
+    private String type;
+
+    @Getter
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Contact contact;
+    private Contact contact;
 
-    public PhoneNumber(int code, long number, String type) {
+    public PhoneNumber(int code, long number, String type, Contact contact) {
         this.code = code;
         this.number = number;
         this.type = type;
+        this.contact = contact;
     }
 }
