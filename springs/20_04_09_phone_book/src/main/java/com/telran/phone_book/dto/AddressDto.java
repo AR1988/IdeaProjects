@@ -13,15 +13,21 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 public class AddressDto {
+
     @Size(max = 10, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
     public String country;
+
     @Size(max = 10, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
     public String city;
+
     @Size(max = 25, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
     public String address;
+
     @Digits(integer = 10, fraction = 0, message = "{com.telran.phone_book.zip.validation.message}")
     public String zip;
-    @Size(max = 10, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
 
+    @Size(max = 10, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
     public String type;
+
+    public int personId;
 }
