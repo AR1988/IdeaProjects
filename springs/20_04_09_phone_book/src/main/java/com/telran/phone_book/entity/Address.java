@@ -9,28 +9,45 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String city;
-    String country;
-    String address;
-    String zip;
-    String type;
+    private int id;
+
+    @Setter
+    @Getter
+    private String city;
+
+    @Setter
+    @Getter
+    private String country;
+
+    @Setter
+    @Getter
+    private String address;
+
+    @Setter
+    @Getter
+    private String zip;
+
+    @Setter
+    @Getter
+    private String type;
+
+    @Getter
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Contact contact;
+    private Contact contact;
 
 
-    public Address(String country, String city, String address, String zip, String type) {
+    public Address(String country, String city, String address, String zip, String type, Contact contact) {
         this.city = city;
         this.country = country;
         this.address = address;
         this.zip = zip;
         this.type = type;
+        this.contact = contact;
     }
 }
