@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class NumberService {
 
+    private static final String NUMBER_NOT_FOUND = "Number Not Found";
     final private INumberRepo numberRepo;
     final private IPersonRepo personRepo;
     final private NumberMapper numberMapper;
@@ -44,9 +45,14 @@ public class NumberService {
     }
 
     @Transactional
-    public NumberDto editNumber(int id, NumberDto numberDto) {
-        Number number = numberRepo.findById(id).orElseThrow(() -> new EntityNotFoundException(PersonService.PERSON_NOT_FOUND));
+    public NumberDto editNumber(NumberDto numberDto) {
+        Number number = numberRepo.findById(numberDto.personId).orElseThrow(() -> new EntityNotFoundException(NUMBER_NOT_FOUND));
         number.setNumber(numberDto.number);
         return new NumberDto(number.getId(), number.getNumber(), number.getPerson().getId());
+    }
+
+    public NumberDto getNumberById(int id) {
+        Number number = numberRepo.findById(id).orElseThrow(() -> new EntityNotFoundException(NUMBER_NOT_FOUND));
+        return numberMapper.mapNumberToDto(number);
     }
 }

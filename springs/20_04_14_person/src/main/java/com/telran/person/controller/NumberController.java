@@ -22,17 +22,22 @@ public class NumberController {
     }
 
     @GetMapping("/person/{id}/number")
-    public List<NumberDto> getNumberById(@PathVariable("id") int id) {
+    public List<NumberDto> getNumbersByPersonId(@PathVariable("id") int id) {
         return numberService.getAllNumbersByPerson(id);
     }
 
-    @PutMapping("/number/{id}")
-    public NumberDto editNumber(@PathParam("id") int id, @RequestBody NumberDto numberDto) {
-        return numberService.editNumber(id, numberDto);
+    @PutMapping("/number/")
+    public NumberDto editNumber(@RequestBody NumberDto numberDto) {
+        return numberService.editNumber(numberDto);
     }
 
     @DeleteMapping("/number/{id}")
-    public void removeNumber(@PathParam("id") int id){
+    public void removeNumber(@PathVariable("id") int id) {
         numberService.removeById(id);
+    }
+
+    @GetMapping("/number/{id}/")
+    public NumberDto getNumberById(@PathVariable("id") int id) {
+        return numberService.getNumberById(id);
     }
 }
