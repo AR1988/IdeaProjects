@@ -1,6 +1,6 @@
 package com.telran.phone_book.validation.annotation;
 
-import com.telran.phone_book.dto.PhoneNumberDTO;
+import com.telran.phone_book.dto.PhoneNumberDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhoneTypeValidator implements ConstraintValidator<PhoneType, PhoneNumberDTO> {
+public class PhoneTypeValidator implements ConstraintValidator<PhoneType, PhoneNumberDto> {
     private static final String FILE = "src/phone_type.txt";
 
 
     @Override
-    public boolean isValid(PhoneNumberDTO value, ConstraintValidatorContext context) {
+    public boolean isValid(PhoneNumberDto value, ConstraintValidatorContext context) {
         List<String> list = new ArrayList<>();
         String res = value.type;
         try {

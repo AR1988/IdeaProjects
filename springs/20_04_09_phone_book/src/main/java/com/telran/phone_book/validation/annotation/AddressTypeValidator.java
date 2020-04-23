@@ -1,6 +1,6 @@
 package com.telran.phone_book.validation.annotation;
 
-import com.telran.phone_book.dto.AddressDTO;
+import com.telran.phone_book.dto.AddressDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressTypeValidator implements ConstraintValidator<AddressType, AddressDTO> {
+public class AddressTypeValidator implements ConstraintValidator<AddressType, AddressDto> {
     private static final String FILE = "src/address_type.txt";
 
     @Override
-    public boolean isValid(AddressDTO value, ConstraintValidatorContext context) {
+    public boolean isValid(AddressDto value, ConstraintValidatorContext context) {
         List<String> list = new ArrayList<>();
         String res = value.type;
         try {

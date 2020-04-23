@@ -1,11 +1,18 @@
 package com.telran.phone_book.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+
 public class PhoneNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,55 +20,13 @@ public class PhoneNumber {
     int code;
     long number;
     String type;
-    int contactId;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Contact contact;
 
-    public PhoneNumber() {
-    }
-
-    public PhoneNumber(int code, long number, String type, int contactId) {
+    public PhoneNumber(int code, long number, String type) {
         this.code = code;
         this.number = number;
         this.type = type;
-        this.contactId = contactId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public long getNumber() {
-        return number;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public void setNumber(long number) {
-        this.number = number;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
     }
 }
