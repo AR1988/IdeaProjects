@@ -1,6 +1,6 @@
 package com.telran.phone_book.service;
 
-import com.telran.phone_book.dto.AddressDTO;
+import com.telran.phone_book.dto.AddressDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -8,15 +8,15 @@ import java.util.List;
 
 @Transactional
 @Service
-public interface IAddressService{
+public interface IAddressService {
 
-    void createAddress(AddressDTO addressDTO, int contactDTOId);
+    void createAddress(AddressDto addressDTO);
 
-    AddressDTO editAddress(AddressDTO addressDTO, int id);
+    AddressDto editAddress(AddressDto addressDTO);
 
-    AddressDTO removeAddress(int id);
+    AddressDto removeAddress(int id);
 
-    void removeAllAddressesByContactId (int contactId);
+    void removeAllAddressesByContact(int id);
 
-    List<AddressDTO> getAllAddressesByContactId(int id);
+    List<AddressDto> getAllAddressesByContact(int id);
 }

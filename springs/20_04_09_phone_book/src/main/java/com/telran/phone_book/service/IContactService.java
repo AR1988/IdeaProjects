@@ -1,6 +1,6 @@
 package com.telran.phone_book.service;
 
-import com.telran.phone_book.dto.ContactDTO;
+import com.telran.phone_book.dto.ContactDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,21 +10,17 @@ import java.util.List;
 @Service
 public interface IContactService {
 
-    void createContact(ContactDTO contactDTO);
+    void createContact(ContactDto contactDTO);
 
-    ContactDTO editContact(ContactDTO contactDTO, int id);
+    ContactDto editContact(ContactDto contactDTO);
 
-    ContactDTO getContactById(int id);
+    ContactDto getContactById(int id);
 
-    List<ContactDTO> getAllContacts();
+    List<ContactDto> getAllContacts();
 
-    List<ContactDTO> getAllContactsWithAllPhones();
+    List<ContactDto> getAllContactsByName(String name);
 
-    List<ContactDTO> getAllContactsWithAllAddresses();
+    List<ContactDto> getAllContactsByLastName(String lastName);
 
-    List<ContactDTO> getAllContactsByName(String name);
-
-    List<ContactDTO> getAllContactsByLastName(String lastName);
-
-    ContactDTO removeContact(int id);
+    ContactDto removeContact(int id);
 }

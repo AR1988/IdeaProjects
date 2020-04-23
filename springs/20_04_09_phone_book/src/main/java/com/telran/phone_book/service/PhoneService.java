@@ -1,8 +1,12 @@
 package com.telran.phone_book.service;
 
-import com.telran.phone_book.dto.PhoneNumberDTO;
+import com.telran.phone_book.dto.PhoneNumberDto;
+import com.telran.phone_book.entity.Contact;
 import com.telran.phone_book.entity.PhoneNumber;
+import com.telran.phone_book.mapper.PhoneMapper;
+import com.telran.phone_book.repo.IRepoContact;
 import com.telran.phone_book.repo.IRepoPhone;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,31 +16,31 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
+@AllArgsConstructor
 public class PhoneService implements IPhoneService {
-    private static final String PHONE_NUMBER_NOT_FOUND = "Phone Number Not found";
+
+    static final String PHONE_NUMBER_NOT_FOUND = "Phone number not found";
 
     private final IRepoPhone repoPhone;
-    private final Utils utils;
-
-    public PhoneService(IRepoPhone repoPhone, Utils utils) {
-        this.repoPhone = repoPhone;
-        this.utils = utils;
-    }
+    private final PhoneMapper phoneMapper;
+    private final IRepoContact repoContact;
 
     @Override
-    public void createPhone(PhoneNumberDTO phoneNumberDTO, int contactDTOId) {
+    public void createPhone(PhoneNumberDto phoneNumberDTO) {
+        Contact contact = getContact(phoneNumberDTO.getPersonId());
+
         repoPhone.save(new PhoneNumber(
                 phoneNumberDTO.getCode(),
                 phoneNumberDTO.getNumber(),
                 phoneNumberDTO.getType(),
-                contactDTOId));
+                contact)
+        );
     }
 
     @Override
-    public PhoneNumberDTO editPhoneNumber(PhoneNumberDTO phoneNumberDTO, int id) {
-        PhoneNumber phone = repoPhone.findById(id).orElseThrow(() -> new EntityNotFoundException(PHONE_NUMBER_NOT_FOUND));
+    public PhoneNumberDto editPhoneNumber(PhoneNumberDto phoneNumberDTO) {
+        PhoneNumber phone = getPhone(phoneNumberDTO.getPersonId());
 
-        phone.setId(id);
         phone.setCode(phoneNumberDTO.getCode());
         phone.setNumber(phoneNumberDTO.getNumber());
         phone.setType(phoneNumberDTO.getType());
@@ -46,26 +50,38 @@ public class PhoneService implements IPhoneService {
     }
 
     @Override
-    public PhoneNumberDTO removePhoneNumber(int id) {
-        PhoneNumber phone = repoPhone.deleteById(id).orElseThrow(() -> new EntityNotFoundException(PHONE_NUMBER_NOT_FOUND));
+    public PhoneNumberDto removePhoneNumber(int id) {
+        PhoneNumber phone = getPhone(id);
+
         return convertToDto(phone);
     }
 
-    //TODO contact not found
     @Override
-    public void removeAllPhonesByContactId(int contactId) {
-        repoPhone.deleteAllByContactId(contactId);
+    public void removeAllPhonesByContact(int id) {
+        Contact contact = getContact(id);
+
+        repoPhone.deleteAllByContact(contact);
     }
 
     @Override
-    public List<PhoneNumberDTO> getAllPhoneNumberByContactId(int id) {
-        return repoPhone.findAllByContactId(id)
+    public List<PhoneNumberDto> getAllPhoneNumberByContact(int id) {
+        Contact contact = getContact(id);
+
+        return repoPhone.findAllByContact(contact)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    private PhoneNumberDTO convertToDto(PhoneNumber phoneNumber) {
-        return utils.convertFromPhoneNumberToPhoneNumberDTO(phoneNumber);
+    private PhoneNumberDto convertToDto(PhoneNumber phoneNumber) {
+        return phoneMapper.mapPhoneNumberToDto(phoneNumber);
+    }
+
+    private Contact getContact(int id) {
+        return repoContact.findById(id).orElseThrow(() -> new EntityNotFoundException(ContactService.CONTACT_NOT_FOUND));
+    }
+
+    private PhoneNumber getPhone(int id) {
+        return repoPhone.findById(id).orElseThrow(() -> new EntityNotFoundException(PHONE_NUMBER_NOT_FOUND));
     }
 }

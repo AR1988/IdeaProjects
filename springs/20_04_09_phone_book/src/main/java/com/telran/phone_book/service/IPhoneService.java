@@ -1,6 +1,6 @@
 package com.telran.phone_book.service;
 
-import com.telran.phone_book.dto.PhoneNumberDTO;
+import com.telran.phone_book.dto.PhoneNumberDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,13 +10,13 @@ import java.util.List;
 @Service
 public interface IPhoneService {
 
-    void createPhone(PhoneNumberDTO phoneNumberDTO, int contactDTOId);
+    void createPhone(PhoneNumberDto phoneNumberDTO);
 
-    PhoneNumberDTO editPhoneNumber(PhoneNumberDTO phoneNumberDTO, int id);
+    PhoneNumberDto editPhoneNumber(PhoneNumberDto phoneNumberDTO);
 
-    PhoneNumberDTO removePhoneNumber(int id);
+    PhoneNumberDto removePhoneNumber(int id);
 
-    void removeAllPhonesByContactId (int contactId);
+    void removeAllPhonesByContact(int id);
 
-    List<PhoneNumberDTO> getAllPhoneNumberByContactId(int id);
+    List<PhoneNumberDto> getAllPhoneNumberByContact(int id);
 }

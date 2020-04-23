@@ -1,8 +1,12 @@
 package com.telran.phone_book.service;
 
-import com.telran.phone_book.dto.AddressDTO;
+import com.telran.phone_book.dto.AddressDto;
 import com.telran.phone_book.entity.Address;
+import com.telran.phone_book.entity.Contact;
+import com.telran.phone_book.mapper.AddressMapper;
 import com.telran.phone_book.repo.IRepoAddress;
+import com.telran.phone_book.repo.IRepoContact;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,31 +16,31 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
+@AllArgsConstructor
 public class AddressService implements IAddressService {
-    private static final String ADDRESS_NOT_FOUND = "Address not found";
+
+    public static final String ADDRESS_NOT_FOUND = "Address not found";
+
     private final IRepoAddress repoAddress;
-    private final Utils utils;
+    private final AddressMapper addressMapper;
+    private final IRepoContact repoContact;
 
-    public AddressService(IRepoAddress repoAddress, Utils utils) {
-        this.repoAddress = repoAddress;
-        this.utils = utils;
-    }
-
-    //TODO contact not found
     @Override
-    public void createAddress(AddressDTO addressDTO, int contactDTOId) {
-        repoAddress.save(new Address(addressDTO.getCity(),
-                addressDTO.getCountry(),
+    public void createAddress(AddressDto addressDTO) {
+        Contact contact = getContact(addressDTO.getPersonId());
+
+        repoAddress.save(new Address(addressDTO.getCountry(),
+                addressDTO.getCity(),
                 addressDTO.getAddress(),
                 addressDTO.getZip(),
                 addressDTO.getType(),
-                contactDTOId));
-
+                contact)
+        );
     }
 
     @Override
-    public AddressDTO editAddress(AddressDTO addressDTO, int addressId) {
-        Address address = repoAddress.findById(addressId).orElseThrow(() -> new EntityNotFoundException(ADDRESS_NOT_FOUND));
+    public AddressDto editAddress(AddressDto addressDTO) {
+        Address address = getAddress(addressDTO.personId);
 
         address.setCity(addressDTO.getCity());
         address.setCountry(addressDTO.getCountry());
@@ -45,31 +49,43 @@ public class AddressService implements IAddressService {
         address.setType(addressDTO.getType());
 
         repoAddress.save(address);
+
         return convertToDto(address);
     }
 
     @Override
-    public AddressDTO removeAddress(int addressId) {
-        Address address = repoAddress.deleteById(addressId).orElseThrow(() -> new EntityNotFoundException(ADDRESS_NOT_FOUND));
+    public AddressDto removeAddress(int addressId) {
+        Address address = getAddress(addressId);
+
         return convertToDto(address);
     }
 
-    //TODO contact not found
     @Override
-    public void removeAllAddressesByContactId(int contactId) {
-        repoAddress.deleteAllByContactId(contactId);
+    public void removeAllAddressesByContact(int id) {
+        Contact contact = getContact(id);
+
+        repoAddress.deleteAllByContact(contact);
     }
 
-    //TODO contact not found
     @Override
-    public List<AddressDTO> getAllAddressesByContactId(int contactId) {
-        return repoAddress.findAllByContactId(contactId)
+    public List<AddressDto> getAllAddressesByContact(int id) {
+        Contact contact = getContact(id);
+
+        return repoAddress.findAllByContact(contact)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    private AddressDTO convertToDto(Address address) {
-        return utils.convertFromAddressToAddressDTO(address);
+    private AddressDto convertToDto(Address address) {
+        return addressMapper.mapAddressToDto(address);
+    }
+
+    private Contact getContact(int id) {
+        return repoContact.findById(id).orElseThrow(() -> new EntityNotFoundException(ContactService.CONTACT_NOT_FOUND));
+    }
+
+    private Address getAddress(int id) {
+        return repoAddress.findById(id).orElseThrow(() -> new EntityNotFoundException(ADDRESS_NOT_FOUND));
     }
 }
