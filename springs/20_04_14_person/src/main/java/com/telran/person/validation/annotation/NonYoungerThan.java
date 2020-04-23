@@ -9,18 +9,17 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({PARAMETER, TYPE})
+@Target({FIELD, PARAMETER,})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = LegalAgeValidator.class)
-public @interface LegalAge {
+@Constraint(validatedBy = NonYoungerThanValidator.class)
+public @interface NonYoungerThan {
 
-    int value() default 18;
+    int value() default 0;
 
-    String message() default "{com.telran.person.legal_age.validation.message}";
+    String message() default "{com.telran.person.non_younger_than.validation.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
 }
