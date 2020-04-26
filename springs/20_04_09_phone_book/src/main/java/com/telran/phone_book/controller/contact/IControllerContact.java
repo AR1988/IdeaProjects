@@ -1,22 +1,20 @@
 package com.telran.phone_book.controller.contact;
 
 import com.telran.phone_book.dto.ContactDto;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.List;
 
 public interface IControllerContact {
 
-    void createContact(@RequestBody @Valid ContactDto contactDTO);
+    ModelAndView createContact(ContactDto contactDTO);
 
-    ContactDto editContact(@RequestBody @Valid ContactDto contactDTO);
+    String editContact(Model model, int id);
 
-    ContactDto getContactById(@RequestParam(value = "id") @Min(1) int id);
+    String getContactById(@Min(1) int id, Model model);
 
-    List<ContactDto> getAllContacts();
+    String getAllContacts(Model model);
 
 //    @GetMapping
 //    List<ContactDTO> getAllContactsWithAllPhones();
@@ -24,9 +22,9 @@ public interface IControllerContact {
 //    @GetMapping
 //    List<ContactDTO> getAllContactsWithAllAddresses();
 
-    List<ContactDto> getAllContactsByName(@RequestParam(value = "last-name") String lastName);
+    String getAllContactsByName(String lastName, Model model);
 
-    List<ContactDto> getAllContactsByLastName(@RequestParam(value = "last-name") String lastName);
+    String getAllContactsByLastName(String lastName, Model model);
 
-    ContactDto removeContact(@RequestParam(value = "id") @Min(1) int id);
+    ModelAndView removeContact(@Min(1) int id, Model model);
 }

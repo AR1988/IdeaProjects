@@ -1,21 +1,27 @@
 package com.telran.phone_book.controller.phone;
 
 import com.telran.phone_book.dto.PhoneNumberDto;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.List;
 
 public interface IControllerPhone {
-    @PostMapping
-    void createPhone(@RequestBody @Valid PhoneNumberDto phoneNumberDTO);
 
-    PhoneNumberDto editPhoneNumber(@RequestBody @Valid PhoneNumberDto phoneNumberDTO);
 
-    PhoneNumberDto removePhoneNumber(@RequestParam(value = "id") @Min(1) int id);
+    @PostMapping("/person/{id}/number")
+    ModelAndView createPhone(@Valid PhoneNumberDto phoneNumberDTO, @PathVariable int id);
 
-    List<PhoneNumberDto> getAllPhonesByContactId(@RequestParam(value = "id") @Min(1) int id);
+    @PutMapping("/number/{id}")
+    String editPhoneNumber(@Valid PhoneNumberDto phoneNumberDTO, @PathVariable int id, Model model);
+
+    @GetMapping("/number/{id}")
+    ModelAndView removePhoneNumber(@Min(1) int id);
+
+    //    String getAllPhonesByContactId(@Min(1) int id);
 }

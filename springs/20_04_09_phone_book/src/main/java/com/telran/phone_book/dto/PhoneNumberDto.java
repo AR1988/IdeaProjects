@@ -1,6 +1,5 @@
 package com.telran.phone_book.dto;
 
-import com.telran.phone_book.validation.annotation.PhoneType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
-@PhoneType
+//@PhoneType
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class PhoneNumberDto {
-
+    int id;
     @Digits(integer = 12, fraction = 0, message = "{com.telran.phone_book.code.validation.message}")
     public int code;
 

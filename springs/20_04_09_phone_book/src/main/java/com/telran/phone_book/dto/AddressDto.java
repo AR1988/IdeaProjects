@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 public class AddressDto {
-
+    public int id;
     @Size(max = 10, min = 3, message = "{com.telran.phone_book.first_name.validation.message}")
     public String country;
 

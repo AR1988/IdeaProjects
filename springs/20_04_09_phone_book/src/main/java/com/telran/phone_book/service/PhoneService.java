@@ -73,6 +73,11 @@ public class PhoneService implements IPhoneService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PhoneNumberDto getPhoneById(int id) {
+        return convertToDto(getPhone(id));
+    }
+
     private PhoneNumberDto convertToDto(PhoneNumber phoneNumber) {
         return phoneMapper.mapPhoneNumberToDto(phoneNumber);
     }

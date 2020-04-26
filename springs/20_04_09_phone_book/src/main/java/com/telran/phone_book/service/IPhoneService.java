@@ -19,4 +19,6 @@ public interface IPhoneService {
     void removeAllPhonesByContact(int id);
 
     List<PhoneNumberDto> getAllPhoneNumberByContact(int id);
+
+    PhoneNumberDto getPhoneById(int id);
 }

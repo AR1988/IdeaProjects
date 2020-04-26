@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Address {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -35,9 +36,9 @@ public class Address {
     @Setter
     @Getter
     private String type;
-
+//TODO (fetch = FetchType.LAZY)
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Contact contact;
 

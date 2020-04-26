@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class PhoneNumber {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -29,7 +30,7 @@ public class PhoneNumber {
     private String type;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Contact contact;
 
@@ -39,4 +40,5 @@ public class PhoneNumber {
         this.type = type;
         this.contact = contact;
     }
+
 }

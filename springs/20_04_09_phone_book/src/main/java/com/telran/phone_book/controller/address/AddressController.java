@@ -3,6 +3,7 @@ package com.telran.phone_book.controller.address;
 import com.telran.phone_book.dto.AddressDto;
 import com.telran.phone_book.service.AddressService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
-@RestController
+@Controller
 @Validated
 @AllArgsConstructor
 public class AddressController implements IControllerAddress {

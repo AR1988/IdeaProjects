@@ -1,5 +1,6 @@
 package com.telran.phone_book.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Contact {
 
     @Id
@@ -28,7 +30,7 @@ public class Contact {
     @Setter
     private LocalDate birthday;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact" )
     private List<PhoneNumber> phones = new ArrayList<>();
 
     @OneToMany(mappedBy = "contact")

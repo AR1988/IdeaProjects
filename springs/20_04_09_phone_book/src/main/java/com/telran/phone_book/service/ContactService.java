@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 @AllArgsConstructor
+
 public class ContactService implements IContactService {
 
     static final String CONTACT_NOT_FOUND = "Contact not found";
@@ -35,9 +36,16 @@ public class ContactService implements IContactService {
     private final PhoneMapper phoneMapper;
     private final AddressMapper addressMapper;
 
+
     @Override
     public void createContact(ContactDto contactDTO) {
         Contact contact = convertToContactDto(contactDTO);
+        //        TODO sout
+        System.out.println("Create Contact_Service:\n" +
+                " " + contact.getId() +
+                " " + contact.getName() +
+                " " + contact.getLastName() +
+                " " + contact.getBirthday());
 
         repoContact.save(contact);
     }
@@ -46,6 +54,13 @@ public class ContactService implements IContactService {
     @Override
     public ContactDto editContact(ContactDto contactDTO) {
         Contact contact = getContact(contactDTO.getId());
+
+        //        TODO sout
+        System.out.println("Edit by id Contact_Service:\n" +
+                " " + contact.getId() +
+                " " + contact.getName() +
+                " " + contact.getLastName() +
+                " " + contact.getBirthday());
 
         contact.setName(contactDTO.getName());
         contact.setLastName(contactDTO.getLastName());
@@ -59,6 +74,12 @@ public class ContactService implements IContactService {
     @Override
     public ContactDto getContactById(int id) {
         Contact contact = getContact(id);
+        //        TODO sout
+        System.out.println("Get by id Contact_Service:\n" +
+                " " + contact.getId() +
+                " " + contact.getName() +
+                " " + contact.getLastName() +
+                " " + contact.getBirthday());
 
         return convertToDto(contact);
     }
@@ -139,5 +160,14 @@ public class ContactService implements IContactService {
 
     private Contact getContact(int id) {
         return repoContact.findById(id).orElseThrow(() -> new EntityNotFoundException(CONTACT_NOT_FOUND));
+    }
+
+    public void editContactNoDto(Contact contact) {
+        contact.setName(contact.getName());
+        contact.setLastName(contact.getLastName());
+        contact.setBirthday(contact.getBirthday());
+    }
+    public void createContactNoDto(Contact contact) {
+        repoContact.save(contact);
     }
 }

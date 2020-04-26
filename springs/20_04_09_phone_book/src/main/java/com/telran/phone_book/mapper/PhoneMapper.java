@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 public class PhoneMapper {
 
     public PhoneNumberDto mapPhoneNumberToDto(PhoneNumber phoneNumber) {
-        return new PhoneNumberDto(phoneNumber.getCode(),
+        return new PhoneNumberDto(phoneNumber.getId(),
+                phoneNumber.getCode(),
                 phoneNumber.getNumber(),
                 phoneNumber.getType(),
                 phoneNumber.getContact().getId()

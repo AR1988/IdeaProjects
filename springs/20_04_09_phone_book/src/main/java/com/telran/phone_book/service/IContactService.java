@@ -1,13 +1,11 @@
 package com.telran.phone_book.service;
 
 import com.telran.phone_book.dto.ContactDto;
-import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
-@Service
+//@Transactional
+//@Service
 public interface IContactService {
 
     void createContact(ContactDto contactDTO);

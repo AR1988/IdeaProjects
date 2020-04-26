@@ -3,41 +3,65 @@ package com.telran.phone_book.controller.phone;
 import com.telran.phone_book.dto.PhoneNumberDto;
 import com.telran.phone_book.service.PhoneService;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.List;
 
-@RestController
-@Validated
+@Controller
 @AllArgsConstructor
 public class PhoneController implements IControllerPhone {
 
     PhoneService service;
 
-    @PostMapping("/add/phone")
-    @Override
-    public void createPhone(@RequestBody @Valid PhoneNumberDto phoneNumberDTO) {
-        service.createPhone(phoneNumberDTO);
+    @GetMapping("phone")
+    public String newPhoneFrom(Model model) {
+        model.addAttribute("phone", new PhoneNumberDto());
+        return "phone-form";
     }
 
-    @PutMapping("/edit/phone")
-    @Override
-    public PhoneNumberDto editPhoneNumber(@RequestBody @Valid PhoneNumberDto phoneNumberDTO) {
-        return service.editPhoneNumber(phoneNumberDTO);
+    @PostMapping("phone")
+    public ModelAndView createContact(@ModelAttribute PhoneNumberDto phoneNumberDto) {
+
+        if (phoneNumberDto.getId() == 0)
+            service.createPhone(phoneNumberDto);
+        else
+            service.editPhoneNumber(phoneNumberDto);
+        return new ModelAndView("redirect:/");
     }
 
-    @DeleteMapping("/delete/phone")
+    @GetMapping("/contact/{id}/phone")
     @Override
-    public PhoneNumberDto removePhoneNumber(@RequestParam(value = "id") @Min(1) int id) {
-        return service.removePhoneNumber(id);
+    public ModelAndView createPhone(@ModelAttribute  PhoneNumberDto phoneNumberDTO, @PathVariable int id) {
+        if (phoneNumberDTO.getId() == 0)
+            service.createPhone(phoneNumberDTO);
+        else
+            service.editPhoneNumber(phoneNumberDTO);
+        return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("/get/contact-phones")
+    @PutMapping("/phone/{id}")
     @Override
-    public List<PhoneNumberDto> getAllPhonesByContactId(@RequestParam(value = "id") @Min(1) int id) {
-        return service.getAllPhoneNumberByContact(id);
+    public String editPhoneNumber(@ModelAttribute @Valid PhoneNumberDto phoneNumberDTO, @PathVariable int id, Model model) {
+        PhoneNumberDto phone = service.getPhoneById(id);
+        service.editPhoneNumber(phoneNumberDTO);
+        return "phone-form";
     }
+
+
+    @GetMapping("/phone/{id}")
+    @Override
+    public ModelAndView removePhoneNumber(@Min(1) int id) {
+        service.removePhoneNumber(id);
+        return new ModelAndView("redirect:/");
+    }
+
+//    @GetMapping("/get/contact-phones")
+//    @Override
+//    public String getAllPhonesByContactId(@RequestParam(value = "id") @Min(1) int id) {
+//        return service.getAllPhoneNumberByContact(id);
+//    }
 }
