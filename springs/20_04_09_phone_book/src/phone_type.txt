@@ -1,4 +1,0 @@
-home
-work
-private
-mobile
