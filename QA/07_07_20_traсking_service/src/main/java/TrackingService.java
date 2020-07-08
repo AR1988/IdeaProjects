@@ -12,8 +12,8 @@ public class TrackingService {
     private List<HistoryItem> history = new ArrayList();
 
     public void addCalories(int amount) {
-//        if (amount < 0)
-//            throw new NumberFormatException(NUMBER_IS_NEGATIVE_MESSAGE);
+        if (amount < 0)
+            throw new NumberFormatException(NUMBER_IS_NEGATIVE_MESSAGE);
 
         total += amount;
 
@@ -21,19 +21,18 @@ public class TrackingService {
     }
 
     public void removeCalories(int amount) {
-//        if (amount < 0)
-//            throw new NumberFormatException(NUMBER_IS_NEGATIVE_MESSAGE);
+        if (amount < 0)
+            throw new NumberFormatException(NUMBER_IS_NEGATIVE_MESSAGE);
 
         total -= amount;
 
         if (total < 0)
             total = 0;
 
-        history.add(new HistoryItem(++historyId, amount, "add", total));
-//        history.add(new HistoryItem(++historyId, amount, "remove", total));
+        history.add(new HistoryItem(++historyId, amount, "remove", total));
     }
 
-    public boolean isGoalMe() {
+    public boolean isGoalMeet() {
         return total >= goal;
     }
 

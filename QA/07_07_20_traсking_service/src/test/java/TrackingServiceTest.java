@@ -132,13 +132,13 @@ public class TrackingServiceTest {
         ts.removeCalories(10);  //6
         ts.addCalories(100);    //7
 
-        assertEquals("id_1",10, ts.getHistory().get(0).getTotal());
-        assertEquals("id_2",0, ts.getHistory().get(1).getTotal());
-        assertEquals("id_3",50, ts.getHistory().get(2).getTotal());
-        assertEquals("id_4",38, ts.getHistory().get(3).getTotal());
-        assertEquals("id_5",65, ts.getHistory().get(4).getTotal());
-        assertEquals("id_6",55, ts.getHistory().get(5).getTotal());
-        assertEquals("id_7",155, ts.getHistory().get(6).getTotal());
+        assertEquals("id_1", 10, ts.getHistory().get(0).getTotal());
+        assertEquals("id_2", 0, ts.getHistory().get(1).getTotal());
+        assertEquals("id_3", 50, ts.getHistory().get(2).getTotal());
+        assertEquals("id_4", 38, ts.getHistory().get(3).getTotal());
+        assertEquals("id_5", 65, ts.getHistory().get(4).getTotal());
+        assertEquals("id_6", 55, ts.getHistory().get(5).getTotal());
+        assertEquals("id_7", 155, ts.getHistory().get(6).getTotal());
     }
 
     @Test
@@ -159,18 +159,11 @@ public class TrackingServiceTest {
     }
 
     @Test
-    public void testSetGoal_setGoal100_resultGetGoal1000() {
-        ts.setGoal(1000);
-
-        assertEquals(1000, ts.getGoal());
-    }
-
-    @Test
     public void testIsGoalMe_goal1000Total900_resultFalse() {
         ts.setGoal(1000);
         ts.addCalories(900);
 
-        assertFalse(ts.isGoalMe());
+        assertFalse(ts.isGoalMeet());
     }
 
     @Test
@@ -178,7 +171,7 @@ public class TrackingServiceTest {
         ts.setGoal(1000);
         ts.addCalories(1900);
 
-        assertTrue(ts.isGoalMe());
+        assertTrue(ts.isGoalMeet());
     }
 
     @Test
@@ -186,6 +179,6 @@ public class TrackingServiceTest {
         ts.setGoal(1000);
         ts.addCalories(1000);
 
-        assertTrue(ts.isGoalMe());
+        assertTrue(ts.isGoalMeet());
     }
 }
