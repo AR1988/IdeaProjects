@@ -23,9 +23,10 @@ public class LoginPage extends PageObject {
 
 
     public MainPage login(String user, String pass) {
-        login.sendKeys(user);
-        password.sendKeys(pass);
-        loginButton.click();
+
+        sendTextToWebElement(login, user);
+        sendTextToWebElement(password, pass);
+        clickOnWebElement(loginButton);
         return new MainPage(driver);
     }
 }

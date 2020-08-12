@@ -11,6 +11,8 @@ public class CreateRepoPage extends PageObject {
     private WebElement repoNameInput;
     @FindBy(id = "repository_description")
     private WebElement descriptionInput;
+    @FindBy(xpath = "//*[@id=\"new_repository\"]/div[4]/button")
+    private WebElement repoFormSubmitBtn;
     @FindBy(id = "new_repository")
     private WebElement repoForm;
 
@@ -18,18 +20,19 @@ public class CreateRepoPage extends PageObject {
         super(driver);
     }
 
-    public boolean createBtnEnabled() {
-        waitForElementIsDispalyed(3000, repoForm);
-        return repoForm.isEnabled();
-    }
+    public void fillForm(String repoName, String desc) {
 
-    public void fillAndSendForm(String repoName, String desc) {
-        repoNameInput.sendKeys(repoName);
-        descriptionInput.sendKeys(desc);
+        sendTextToWebElement(repoNameInput, repoName);
+        sendTextToWebElement(descriptionInput, desc);
     }
 
     public RepoDetailsPage submitCreateRepoForm() {
-        repoForm.submit();
+        submitForm(repoFormSubmitBtn);
         return new RepoDetailsPage(driver);
     }
+
+    public WebElement getRepoFormSubmitBtn() {
+        return repoFormSubmitBtn;
+    }
+
 }

@@ -1,6 +1,6 @@
 package page_pbject_pattern;
 
-import org.openqa.selenium.WebDriver;
+import org.junit.Assert;
 import org.testng.annotations.Test;
 import utils.FunctionalTest;
 
@@ -14,6 +14,7 @@ public class SignUpFormTest extends FunctionalTest {
 
     @Test
     public void signUp() {
+
         driver.get("http://www.kimschiller.com/page-object-pattern-tutorial/index.html");
 
         SignUpPage signUpPage = new SignUpPage(driver);

@@ -11,26 +11,25 @@ import utils.PageObject;
 public class ReposPage extends PageObject {
 
     @FindBy(id = "your-repos-filter")
-    WebElement searchInput;
+    private WebElement searchInput;
     @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[2]/div/div[2]/div[2]/div/div[1]/form")
-    WebElement searchForm;
+    private WebElement searchForm;
 
     @FindBy(xpath = "//*[@id=\"user-repositories-list\"]/div[1]/div[1]/strong[1]")
-    WebElement searchResult;
+    private WebElement searchResult;
 
-    //    @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[1]/div/div/div[2]/div/nav/a[2]/span")
     @FindBy(xpath = "//*[@id=\"js-pjax-container\"]/div[1]/div/div/div[2]/div/nav/a[2]/span")
-    WebElement totalRepos;
+    private WebElement totalRepos;
 
     public ReposPage(WebDriver driver) {
         super(driver);
     }
 
     public RepoDetailsPage searchRepo(String repoName) {
-        searchInput.sendKeys(repoName);
-        searchForm.submit();
 
-        int searchResult = Integer.parseInt(this.searchResult.getText());
+        search(repoName);
+
+        int searchResult = getSearchResultAmount(repoName);
 
         if (searchResult == 0)
             throw new NoSearchResult("no repo found with name " + repoName);
@@ -39,7 +38,23 @@ public class ReposPage extends PageObject {
         else
             driver.findElement(By.xpath("//*[@id=\"user-repositories-list\"]/ul/li/div[1]/div[1]/h3/a"))
                     .click();
+
         return new RepoDetailsPage(driver);
+    }
+
+    public int getSearchResultAmount(String repoName) {
+        search(repoName);
+        return Integer.parseInt(this.searchResult.getText());
+    }
+
+    public int getTotalRepos() {
+        int searchResult;
+        try {
+            searchResult = Integer.parseInt(this.totalRepos.getText());
+        } catch (NumberFormatException ex) {
+            searchResult = 0;
+        }
+        return searchResult;
     }
 
     public RepoDetailsPage getFirstRepoDetails() {
@@ -48,14 +63,8 @@ public class ReposPage extends PageObject {
         return new RepoDetailsPage(driver);
     }
 
-    public int findElement(String repoName) {
-        searchInput.sendKeys(repoName);
-        searchForm.submit();
-
-        return Integer.parseInt(this.searchResult.getText());
-    }
-
-    public int getTotalRepos() {
-        return Integer.parseInt(this.totalRepos.getText());
+    private void search(String repoName) {
+        sendTextToWebElement(searchInput, repoName);
+        submitForm(searchForm);
     }
 }

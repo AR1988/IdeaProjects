@@ -22,10 +22,9 @@ public class SettingsPage extends PageObject {
     }
 
     public MainPage deleteRepo(String repoName, String nickName) {
-        deleteRepoBtn.click();
-        confirmDeleteInput.sendKeys(nickName + "/" + repoName);
-        deleteRepoForm.submit();
-
+        clickOnWebElement(deleteRepoBtn);
+        sendTextToWebElement(confirmDeleteInput, nickName + "/" + repoName);
+        submitForm(deleteRepoForm);
         return new MainPage(driver);
     }
 }

@@ -8,19 +8,21 @@ import utils.PageObject;
 
 public class MainPage extends PageObject {
 
+    @FindBy(xpath = "/html/body/div[1]/header/div[6]/details/summary")
+    private WebElement menuBtn;
+
+//    @FindBy(xpath = "//*[@id=\"repos-container\"]/ul")
+//    private WebElement repoList;
+
+    @FindBy(xpath = "//*[@id=\"js-flash-container\"]")
+    private WebElement alertBlock;
+
     public MainPage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = "/html/body/div[1]/header/div[6]/details/summary")
-    private WebElement menuBtn;
-
-    @FindBy(xpath = "//*[@id=\"repos-container\"]/ul")
-    private WebElement repoList;
-
-
     private void clickCreatePage() {
-        menuBtn.click();
+        clickOnWebElement(menuBtn);
         driver.findElement(By.xpath("/html/body/div[1]/header/div[6]/details/details-menu/a[1]"))
                 .click();
     }
@@ -28,5 +30,9 @@ public class MainPage extends PageObject {
     public CreateRepoPage createRepo() {
         clickCreatePage();
         return new CreateRepoPage(driver);
+    }
+
+    public String getMessageFromAlertBlock() {
+        return alertBlock.getText();
     }
 }
