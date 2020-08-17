@@ -11,17 +11,17 @@ export class StartComponent implements OnInit {
   }
 
   private static eventHandler(): void {
-    const elt = document.getElementById('btn');
-    elt.innerText = 'Clicked';
+    // const elt = document.getElementById('btn');
+    // elt.innerText = 'Clicked';
   }
 
   ngOnInit(): void {
-    window.addEventListener('storage', StartComponent.eventHandler, false);
+    // window.addEventListener('storage', StartComponent.eventHandler, false);
   }
 
   onClick(): void {
-    localStorage.setItem('key', Math.random().toString());
-    StartComponent.eventHandler();
+    // localStorage.setItem('key', Math.random().toString());
+    // StartComponent.eventHandler();
   }
 }
 

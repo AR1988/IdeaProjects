@@ -9,7 +9,7 @@ import {GameComponent} from './game/game/game.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'start', pathMatch: 'full'},
-  {path: 'start', component: StartComponent},
+  {path: 'start/', component: StartComponent},
   {path: 'new-game', component: NewGameComponent},
   {path: 'edit/:themeId', component: QuestionsFormComponent},
   {path: 'themes', component: AllThemesComponent},

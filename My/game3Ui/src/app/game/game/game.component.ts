@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Question} from '../../../model/question';
 import {InitService} from '../../service/init.service';
-import {Answer} from '../../../model/answer';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -12,55 +11,43 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit, OnDestroy {
-
   constructor(public initService: InitService, private route: ActivatedRoute) {
   }
-
-  static questionNumber: number;
-  static initService: InitService;
-  static subscription: Subscription;
-  static question: Question;
-  static themeId: number;
 
   form: FormGroup;
   // questions: Question[];
   question: Question;
   user: string;
-  answers: Answer[];
-
-  formA: FormGroup;
-  correctAnswer: Answer;
+  // formA: FormGroup;
   questionNumber = 1;
-  private subscription: Subscription;
   public themeId: number;
-
-  private static eventHandler(): void {
-    console.log('cliced');
-  }
-
-  static nextQuestion(): void {
-    localStorage.setItem('key', Math.random().toString());
-
-    this.questionNumber++;
-    this.subscription = this.initService.getQuestionsByThemeIdAndQuestionId(this.themeId, this.questionNumber)
-      .subscribe(value => this.question = value);
-    GameComponent.eventHandler();
-  }
+  private subscription: Subscription;
 
   ngOnInit(): void {
     this.themeId = +this.route.snapshot.paramMap.get('themeId');
-
-    this.subscription = this.initService.getQuestionsByThemeIdAndQuestionId(this.themeId, this.questionNumber)
-      .subscribe(value => this.question = value);
-
+    this.questionRequest();
     this.initFormsControls();
-
-    window.addEventListener('storage', GameComponent.eventHandler, false);
-
+    // this.initFormsControls();
+    window.addEventListener('storage', this.eventHandler, false);
   }
 
-  onSubmit(): void {
-    this.user = this.form.value.user;
+  private questionRequest = (): void => {
+    this.subscription = this.initService.getQuestionsByThemeIdAndQuestionId(this.themeId, this.questionNumber)
+      .subscribe(value => this.question = value);
+  }
+
+  // onSubmit(): void {
+  //   this.user = this.form.value.user;
+  // }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  nextQuestion(): void {
+    this.questionNumber++;
+    localStorage.setItem('key', Math.random().toString());
+    this.eventHandler();
   }
 
   private initFormsControls(): void {
@@ -69,12 +56,9 @@ export class GameComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  nextQuestion(): void {
-    GameComponent.nextQuestion();
+  private eventHandler(): void {
+    console.log(this.questionNumber);
+    this.questionRequest();
   }
 }
 

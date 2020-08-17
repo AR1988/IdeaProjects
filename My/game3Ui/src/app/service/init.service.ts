@@ -12,14 +12,25 @@ import {Answer} from '../../model/answer';
 export class InitService {
 
   host = 'http://localhost:8080/api/';
-  theme: Observable<Theme[]>;
+  themes: Observable<Theme[]>;
 
   constructor(private http: HttpClient) {
   }
 
-  getAllThemes(): Observable<Theme[]> {
-    return this.theme = this.http.get<Theme[]>('http://localhost:8080/api/get/themes');
+  private reload(): void {
+    this.themes = this.http.get<Theme[]>('http://localhost:8080/api/get/themes');
   }
+
+  getAllThemes(): Observable<Theme[]> {
+    if (!this.themes) {
+      this.reload();
+    }
+    return this.themes;
+  }
+
+  // getAllThemes(): Observable<Theme[]> {
+  //   return this.themes = this.http.get<Theme[]>('http://localhost:8080/api/get/themes');
+  // }
 
   sendTheme(theme: Theme): Observable<number> {
     return this.http.post<number>('http://localhost:8080/api/set/theme/', theme);

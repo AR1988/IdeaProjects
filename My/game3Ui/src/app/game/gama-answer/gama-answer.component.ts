@@ -23,18 +23,17 @@ export class GamaAnswerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.initService.getAllAnswersByQuestionId(this.question.id).subscribe(value => this.answers = value);
-    console.log('start answers');
   }
 
   onClick(isCorrect: boolean): void {
     // if (isCorrect) {
     //   alert('correct');
     // } else {
-    //   alert('incorrect');
+    // alert('incorrect');
     // }
+    console.log(isCorrect);
     this.nextQuestion.emit();
-
-    this.subscription = this.initService.getAllAnswersByQuestionId(this.question.id).subscribe(value => this.answers = value);
+    this.ngOnInit();
   }
 
   ngOnDestroy(): void {
