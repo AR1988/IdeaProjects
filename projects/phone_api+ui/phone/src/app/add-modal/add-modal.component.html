@@ -1,0 +1,59 @@
+<div class="modal" id="contact-formModal" tabindex="-1" role="dialog" aria-labelledby="contact-formModal"
+     aria-hidden="true"
+     data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-group">
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="name" class="col control-label">Name</label>
+              <input class="form-control" type="text" id="name" placeholder="Name"
+                     name="name" [(ngModel)]="contactToAdd.name" #contactName>
+            </div>
+            <div class="form-group col">
+              <label for="lastName" class="col control-label">Last name </label>
+              <input class="form-control lastname" type="text" id="lastName" placeholder="Last name"
+                     name="lastName" [(ngModel)]="contactToAdd.lastName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="birthday" class="col control-label">Birthday</label>
+              <input class="form-control type" type="text" id="birthday" name="age"
+                     placeholder="Age" [(ngModel)]="contactToAdd.age">
+            </div>
+            <div class="form-group col">
+              <label for="type" class="col control-label">Type</label>
+              <select class="custom-select" id="type" name="type" [(ngModel)]="contactToAdd.type">
+                <option selected value="Private">Private</option>
+                <option value="Work">Work</option>
+                <option value="Friend">Friend</option>
+                <option value="Another">Another</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col">
+          <a (click)="onAdd()" [class.disabled]="!contactName.value"  class="btn btn-primary btn-block" data-dismiss="modal"
+                  type="button"
+          >Save
+          </a>
+        </div>
+        <div class="col">
+          <a (click)="onClose()" class="btn btn-primary btn-block" data-dismiss="modal" type="reset"> Cancel
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

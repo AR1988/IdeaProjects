@@ -1,0 +1,56 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3" (click)="onReload()"
+        routerLink="/">Search
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-title">
+
+      </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-8">
+            <label for="search-box">Search:</label>
+            <input #searchBox class="form-control" placeholder="Search" type="text" id="search-box"
+                   value="{{searchString}}"
+                   [(ngModel)]="searchString" (input)="search(searchString)">
+          </div>
+          <div class="col-4">
+            <label for="searchBy">State</label>
+            <select class="custom-select" id="searchBy" #searchBy (change)="searchTypeChange(searchBy.value)">
+              <option value="name" [selected]="reloaded">by name</option>
+              <option value="lastname">by last name
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <br>
+            <a class="list-group-item list-group-item-action list-group-item-heading list-group-item-light"
+               *ngFor="let contact of contacts$| async" routerLink="/detail/{{contact.id}}"
+               data-dismiss="modal">{{contact.name}} {{contact.lastName}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"
+                (click)="onReload()">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
