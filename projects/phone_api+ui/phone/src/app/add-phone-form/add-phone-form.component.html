@@ -1,0 +1,36 @@
+<div class="form-row">
+    <div class="form-group col-3">
+    <input [(ngModel)]="phone.code"
+           aria-label="code"
+           class="form-control"
+           name="code"
+           placeholder="code"
+           type="text">
+  </div>
+  <div class="form-group col-5">
+    <input aria-label="number"
+           class="form-control"
+           type="text"
+           placeholder="number"
+           [(ngModel)]="phone.number"
+           name="number"
+           #phoneNumber>
+  </div>
+  <div class="form-group col-4">
+    <select aria-label="code"
+            class="custom-select"
+            [(ngModel)]="phone.type"
+            name="type">
+      <option selected value="Private">Private</option>
+      <option value="Work">Work</option>
+      <option value="Friend">Friend</option>
+      <option value="Another">Another</option>
+    </select>
+  </div>
+  <div class="btn-group btn-block">
+    <a class="btn btn-sm btn-outline-primary" (click)="onClickSave()"
+       [class.disabled]="phoneNumber.value.length < 1">Save</a>
+    <a class="btn btn-sm btn-outline-danger" (click)="onClickCancel()">Cancel</a>
+  </div>
+</div>
+
