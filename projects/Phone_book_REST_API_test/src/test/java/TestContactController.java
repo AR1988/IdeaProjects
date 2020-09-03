@@ -9,7 +9,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import utils.Utils;
 import utils.jsonDtos.ContactJson;
@@ -20,6 +22,11 @@ import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestContactController extends Utils {
+
+    @BeforeClass
+    public static void init() throws IOException {
+        token = createTestUserAndGetToken(USER_NAME_1, USER_PASS_1);
+    }
 
     @Test
     public void test001_createEmptyContact() throws IOException {
@@ -48,15 +55,13 @@ public class TestContactController extends Utils {
         getRequest.setHeader("Content-type", "application/json");
         response = client.execute(getRequest);
 
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        JSONObject jsonObj = new JSONObject(responseString);
+        JSONObject jsonObj = getJson(response);
 
         logger.info("Response body : " + jsonObj);
 
         if (!jsonObj.has("message") && jsonObj.has("id")) {
             ContactJson contactJson = new ContactJson();
-            logger.info(contactJson.toString());
+            logger.info(contactJson.fromJson(jsonObj));
             logger.warning("Maybe this user exist this contact. Contact id: " + contactJson.getId());
             fail("Check this contact in DB. Contact id: " + contactJson.getId());
         } else {
@@ -76,16 +81,14 @@ public class TestContactController extends Utils {
 
         response = client.execute(getRequest);
 
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        JSONObject jsonObj = new JSONObject(responseString);
+        JSONObject jsonObj = getJson(response);
 
         logger.info("Response body : " + jsonObj);
         if (!jsonObj.has("message") && jsonObj.has("id")) {
             ContactJson contactJson = new ContactJson();
             logger.info(contactJson.toString());
             logger.warning("Maybe this user exist this contact. Contact id: " + contactJson.getId());
-            fail("Check this contact in DB. Contact id: " + contactJson.getId());
+            fail("Check this contact in DB. Contact id: \"" + contactJson.getId() + "\" or start test again");
         } else {
             assertEquals("Error! This contact doesn't exist in our DB", jsonObj.get("message"));
         }
@@ -107,9 +110,7 @@ public class TestContactController extends Utils {
 
         response = client.execute(getRequest);
 
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        JSONObject jsonObj = new JSONObject(responseString);
+        JSONObject jsonObj = getJson(response);
 
         int contactId = jsonObj.getInt("id");
         logger.info("Response body : " + jsonObj
@@ -191,8 +192,11 @@ public class TestContactController extends Utils {
         String message = "";
         try {
             message = jsonGetById.getString("message");
+
         } catch (JSONException ex) {
-            logger.info("No expected error message found. Test fail!");
+            logger.info("No expected error message found. Test fail!"
+                    + "\nMessage : " + message);
+            logger.info("Message : " + message);
             fail("contact not removed");
         }
 
@@ -210,6 +214,9 @@ public class TestContactController extends Utils {
         String responseStringContactsSize = EntityUtils.toString(entityContacts, "UTF-8");
         int contactsSize = Integer.parseInt(responseStringContactsSize);
 
+        assertTrue(contactsSize > 0);
+
+        logger.info("Actual user id: " + USER_NAME_1);
         logger.info("Contacts by user : " + contactsSize);
 
         getRequest = new HttpGet(contactEP + "/all");
@@ -217,9 +224,7 @@ public class TestContactController extends Utils {
         getRequest.setHeader("Content-type", "application/json");
         response = client.execute(getRequest);
 
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        JSONArray jsonArray = new JSONArray(responseString);
+        JSONArray jsonArray = getJsonArray(response);
 
         logger.info("Response body : " + jsonArray);
         StringBuilder stringBuilder = new StringBuilder();
@@ -230,9 +235,37 @@ public class TestContactController extends Utils {
 
         assertEquals(contactsSize, jsonArray.length());
         assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+    }
 
-//        JSONObject jsonArrayFirst = jsonArray.getJSONObject(0);
-//        JSONArray jsonArrayEmails = jsonArrayFirst.getJSONArray("emails");
+    @Test
+    public void test007_getContactByUserInvalidToken_() throws IOException {
+
+        getRequest = new HttpGet(contactEP + "/count");
+        getRequest.setHeader("Authorization", "Bearer " + token);
+        getRequest.setHeader("Content-type", "application/json");
+        response = client.execute(getRequest);
+        HttpEntity entityContacts = response.getEntity();
+        String responseStringContactsSize = EntityUtils.toString(entityContacts, "UTF-8");
+        int contactsSize = Integer.parseInt(responseStringContactsSize);
+
+        logger.info("Contacts by user : " + contactsSize);
+
+        getRequest = new HttpGet(contactEP + "/all");
+        getRequest.setHeader("Authorization", "Bearer " + token);
+        getRequest.setHeader("Content-type", "application/json");
+        response = client.execute(getRequest);
+
+        JSONArray jsonArray = getJsonArray(response);
+
+        logger.info("Response body : " + jsonArray);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Contacts:").append("\n");
+        for (Object jsonObj : jsonArray)
+            stringBuilder.append(jsonObj).append("\n");
+        logger.info(stringBuilder.toString());
+
+        assertEquals(contactsSize, jsonArray.length());
+        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
     }
 }
 

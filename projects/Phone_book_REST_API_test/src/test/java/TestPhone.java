@@ -2,7 +2,10 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import utils.Utils;
 import utils.jsonDtos.PhoneJSon;
 
@@ -10,8 +13,15 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestPhone extends Utils {
-    private int contactId;
+
+    private static int contactId;
+
+    @BeforeClass
+    public static void init() throws IOException {
+        token = createTestUserAndGetToken(USER_NAME_1, USER_PASS_1);
+    }
 
     @Test
     public void test001_addPhone() throws IOException {
@@ -38,6 +48,8 @@ public class TestPhone extends Utils {
     public void test002_getPhone() throws IOException {
         JSONObject jsonObject = getContactById(contactId, token);
         System.out.println(jsonObject);
+
+        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
     }
 
 }

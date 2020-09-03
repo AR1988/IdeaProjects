@@ -1,0 +1,5 @@
+version: '3.3'
+services:
+  app:
+    container_name: time
+    image: timejava:latest

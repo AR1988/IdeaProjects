@@ -13,9 +13,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.runner.notification.RunListener;
 import utils.jsonDtos.ContactJson;
 import utils.jsonDtos.UserJSon;
@@ -26,23 +26,19 @@ import java.util.logging.Logger;
 public class Utils extends RunListener {
     public static Logger logger = Logger.getLogger(Utils.class.getName());
 
-    public final String HOST_URL = "http://localhost:8080/";
+    public static final String HOST_URL = "http://localhost:8080/";
 
-    public final String login = HOST_URL + "api/user/login";
+    public static final String login = HOST_URL + "api/user/login";
     public String contactEP = HOST_URL + "api/contact/";
     public String getLastContactEP = HOST_URL + "api/contact/last";
 
-    public String userBaseEP = HOST_URL + "api/user";
+    public static String userBaseEP = HOST_URL + "api/user";
     public String userGetEp = HOST_URL + "api/get-user";
 
     public String phoneBaseUrl = HOST_URL + "/api/phone";
 
-
-    public final String USER_NAME_TEST = "test.user@gmail.com";
-    public final String USER_PASS_TEST = "test_user_pass";
-
-    public String USER_NAME_1 = "newUser1@gmail.com";
-    public String USER_PASS_1 = "user1_password";
+    public static String USER_NAME_1 = "newUser1@gmail.com";
+    public static String USER_PASS_1 = "user1_password";
 
     public String USER_NAME_2 = "newUser2@gmail.com";
     public String USER_PASS_2 = "user2_password";
@@ -50,24 +46,29 @@ public class Utils extends RunListener {
     public String USER_NAME_3 = "newUser3@gmail.com";
     public String USER_PASS_3 = "user3_password";
 
-    public CloseableHttpClient client;
-    public HttpResponse response;
-    public HttpPost postRequest;
+    public static CloseableHttpClient client = HttpClientBuilder.create().build();
+    ;
+    public static HttpResponse response;
+    public static HttpPost postRequest;
     public HttpPut putRequest;
     public HttpGet getRequest;
     public HttpDelete deleteRequest;
 
     public static String token = "";
 
-    @Before
-    public void init() throws IOException {
-        client = HttpClientBuilder.create().build();
-        token = createTestUserAndGetToken(USER_NAME_TEST, USER_PASS_TEST);
+    @AfterClass
+    public static void clear() throws IOException {
+        logger.info("\n..........................................................................\n"
+                + Colors.ANSI_BG_GREEN
+                + "user token: " + token
+                + "\nuser removed: " + removeUser(token)
+                + Colors.ANSI_RED + Colors.ANSI_BRIGHT_BG_WHITE
+                + "\n..........................................................................\n");
+
     }
 
-    public String getToken(String userName, String userPassword) throws IOException {
+    public static String getToken(String userName, String userPassword) throws IOException {
         postRequest = new HttpPost(login);
-
         UserJSon userJSon = new UserJSon(userName, userPassword);
 
         HttpClientContext context = HttpClientContext.create();
@@ -77,12 +78,16 @@ public class Utils extends RunListener {
         response = client.execute(postRequest, context);
         String token = context.getCookieStore().getCookies().get(0).getValue();
         logger.info("\n..........................................................................\n"
-                + "User : \"" + userName + "\"\n" + "Token : " + token
-                + "\n..........................................................................");
+                + Colors.ANSI_BG_GREEN
+                + "User : \"" + userName + "\""
+                + "\nToken : " + token
+                + Colors.ANSI_RED + Colors.ANSI_BRIGHT_BG_WHITE
+                + "\n..........................................................................\n"
+        );
         return token;
     }
 
-    public String createTestUserAndGetToken(String userName, String password) throws IOException {
+    public static String createTestUserAndGetToken(String userName, String password) throws IOException {
         postRequest = new HttpPost(userBaseEP);
         UserJSon userJSon = new UserJSon(userName, password);
 
@@ -91,6 +96,18 @@ public class Utils extends RunListener {
         postRequest.setEntity(entity);
         response = client.execute(postRequest);
         return getToken(userName, password);
+    }
+
+    public JSONObject getJson(HttpResponse response) throws IOException {
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        return new JSONObject(responseString);
+    }
+
+    public JSONArray getJsonArray(HttpResponse response) throws IOException {
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        return new JSONArray(responseString);
     }
 
     public void createContact(String name, String lastName, String desc, String token) throws IOException {
@@ -127,6 +144,38 @@ public class Utils extends RunListener {
         return new JSONObject(responseString);
     }
 
+    public void getAllContactByUserName(String token) throws IOException {
+        int contactsSize = getTotalContactsNumberByUser(token);
+
+        logger.info("User : \"" + USER_NAME_1 + "\" has " + contactsSize);
+        logger.info("Contacts by user : " + contactsSize);
+
+        getRequest = new HttpGet(contactEP + "/all");
+        getRequest.setHeader("Authorization", "Bearer " + token);
+        getRequest.setHeader("Content-type", "application/json");
+        response = client.execute(getRequest);
+
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        JSONArray jsonArray = new JSONArray(responseString);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Contacts:").append("\n");
+        for (Object jsonObj : jsonArray)
+            stringBuilder.append(jsonObj).append("\n");
+        logger.info(stringBuilder.toString());
+    }
+
+    public int getTotalContactsNumberByUser(String token) throws IOException {
+        getRequest = new HttpGet(contactEP + "/count");
+        getRequest.setHeader("Authorization", "Bearer " + token);
+        getRequest.setHeader("Content-type", "application/json");
+        response = client.execute(getRequest);
+        HttpEntity entityContacts = response.getEntity();
+        String responseStringContactsSize = EntityUtils.toString(entityContacts, "UTF-8");
+        return Integer.parseInt(responseStringContactsSize);
+    }
+
     public static boolean removeUser(String token) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
         HttpDelete deleteRequest = new HttpDelete("http://localhost:8080/api/user");
@@ -136,15 +185,6 @@ public class Utils extends RunListener {
         HttpResponse response = client.execute(deleteRequest);
 
         return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
-    }
-
-    @AfterClass
-    public static void clear() throws IOException {
-        logger.info("\n..........................................................................\n"
-                + "user token: " + token
-                + "\nuser removed: " + removeUser(token)
-                + "\n..........................................................................\n");
-
     }
 
 }

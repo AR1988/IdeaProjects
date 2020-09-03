@@ -1,5 +1,6 @@
 package utils.jsonDtos;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ContactJson {
@@ -59,9 +60,15 @@ public class ContactJson {
 
     public String fromJson(JSONObject jsonObj) {
         this.id = (int) jsonObj.get("id");
-        this.contactFirstName = jsonObj.getString("firstName");
-        this.contactLastName = jsonObj.getString("lastName");
-        this.description = jsonObj.getString("description");
+        try {
+            this.contactFirstName = jsonObj.getString("firstName");
+            this.contactLastName = jsonObj.getString("lastName");
+            this.description = jsonObj.getString("description");
+        } catch (JSONException ignored) {
+            this.contactFirstName = String.valueOf(jsonObj.get("firstName"));
+            this.contactLastName = String.valueOf(jsonObj.get("lastName"));
+            this.description = String.valueOf(jsonObj.get("description"));
+        }
 
         stringBuilder = new StringBuilder();
 

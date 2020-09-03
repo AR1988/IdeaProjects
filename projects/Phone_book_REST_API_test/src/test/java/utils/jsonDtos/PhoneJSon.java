@@ -35,7 +35,7 @@ public class PhoneJSon {
 
                 .append(fieldContactId)
                 .append(contactId)
-                .append("\"\n")
+                .append("\"")
 
                 .append("\n}");
 
